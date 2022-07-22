@@ -22,14 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(COAController::class)->group(function () {
     Route::get('/coa', 'index');
-    
+
     Route::post('/coa/create', 'store');
+    Route::delete('/coa/delete/{id}', 'destroy');
+    Route::post('/coa/{id}', 'show');
+    Route::put('/coa/update/{id}', 'edit');
 });
 
 Route::controller(LokasiController::class)->group(function () {
     Route::get('/lokasi', 'index');
-
     Route::post('/lokasi/create', 'store');
-    
     Route::get('/lokasi/{id}', 'show');
 });

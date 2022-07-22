@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         //
-        Schema::create('COA', function (Blueprint $table) {
+        Schema::create('coa', function (Blueprint $table) {
             $table->bigIncrements('id_coa');
             $table->string('kode_account')->length(10)->unique();
-            $table->string('name')->length(100);
+            $table->string('nama')->length(100);
             $table->string('posisi')->length(1);
             $table->string('letak')->length(6);
             $table->string('jns')->length(20);
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->char('aktif')->length(1);
             $table->char('pakai_budget')->length(1);
             $table->integer('lama_budget_harian');
-            $table->integer('lama_budget_bulan');
+            $table->integer('lama_budget_bulanan');
             $table->float('budget_harian');
             $table->float('budget_bulanan');
             $table->char('flag_khusus')->length(1);

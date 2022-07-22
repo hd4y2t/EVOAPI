@@ -21,11 +21,10 @@ class COA extends Model
         'aktif',
         'pakai_budget',
         'lama_budget_harian',
-        'lama_budget_bulan',
+        'lama_budget_bulanan',
         'budget_harian',
         'budget_bulanan',
         'flag_khusus',
         'id_kategori_coa',
     ];
-    
 }
