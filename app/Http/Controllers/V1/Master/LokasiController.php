@@ -30,10 +30,10 @@ class LokasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -47,9 +47,9 @@ class LokasiController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'required',
-                'alamat' => 'required',
-                'hp' => 'required',
+                'nama' => 'required|max:50|unique:lokasi',
+                'alamat' => 'required|max:150',
+                'hp' => 'required|numeric',
                 'inisial_faktur' => 'required',
             ]);
 
@@ -118,6 +118,30 @@ class LokasiController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            //code...
+            $request->validate([
+                'nama' => 'required|unique:lokasi',
+                'alamat' => 'required',
+                'hp' => 'required',
+                'inisial_faktur' => 'required',
+            ]);
+
+          
+            Lokasi::where('id_lokasi',$id)->update($request->all());
+            $a = Lokasi::where('id_lokasi', $id)->first();
+
+            return ResponseFormatter::success([
+                'lokasi'=> $a
+            ],'Data Lokasi berhasil diubah');
+        } catch (Exception $error) {
+            //throw $th;
+            return ResponseFormatter::error([
+                'message' => $error->getMessage(),
+                'error' => $error
+            ], 'Data Lokasi gagal diubah');
+            
+        }
     }
 
     /**
@@ -129,5 +153,19 @@ class LokasiController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            //code...
+            Lokasi::where('id_lokasi',$id)->delete();
+            return ResponseFormatter::success([
+                'message' => 'Data lokasi berhasil dihapus'
+            ],'Data Lokasi berhasil dihapus');
+        } catch (Exception $error) {
+            //throw $th;
+            return ResponseFormatter::error([
+                'message' => $error->getMessage(),
+                'error' => $error
+            ], 'Data Lokasi gagal dihapus');
+            
+        }
     }
 }

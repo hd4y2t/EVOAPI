@@ -30,10 +30,10 @@ class KategoriCOAController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -46,7 +46,7 @@ class KategoriCOAController extends Controller
         //
         try {
          $request->validate([
-             'nama' => 'required',
+             'nama' => 'required|min:3|max:100',
          ]);
          KategoriCOA::create([
                     'nama' => $request->nama,
@@ -95,10 +95,10 @@ class KategoriCOAController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    // public function edit($id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -110,6 +110,26 @@ class KategoriCOAController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            //code...
+            $request->validate([
+                'nama' => 'required',
+            ]);
+            $kategori_coa = KategoriCOA::findOrFail($id);
+            $kategori_coa->update([
+                'nama' => $request->nama,
+            ]);
+            return ResponseFormatter::success([
+                'message' => 'Data kategori COA berhasil diubah',
+                'kategori_coa' => $request->all(),
+            ], 'Data kategori COA berhasil diubah');
+        } catch (Exception $error) {
+            //throw $th;
+            return ResponseFormatter::error([
+                'message' => $error->getMessage(),
+                'error' => $error
+            ], 'Data kategori COA gagal diubah');
+        }
     }
 
     /**
@@ -121,5 +141,19 @@ class KategoriCOAController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            //code...
+            $kategori_coa = KategoriCOA::findOrFail($id);
+            $kategori_coa->delete();
+            return ResponseFormatter::success([
+                'message' => 'Data kategori COA berhasil dihapus',
+            ], 'Data kategori COA berhasil dihapus');
+        } catch (Exception $error) {
+            //throw $th;
+            return ResponseFormatter::error([
+                'message' => $error->getMessage(),
+                'error' => $error
+            ], 'Data kategori COA gagal dihapus');
+        }
     }
 }

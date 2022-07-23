@@ -21,16 +21,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(COAController::class)->group(function () {
-    Route::get('/coa', 'index');
+    Route::prefix('coa')->group(function () {
 
-    Route::post('/coa/create', 'store');
-    Route::delete('/coa/delete/{id}', 'destroy');
-    Route::post('/coa/{id}', 'show');
-    Route::put('/coa/update/{id}', 'edit');
+        Route::get('/', 'index');
+        Route::post('/create', 'store');
+        Route::delete('/delete/{id}', 'destroy');
+        Route::post('/{id}', 'show');
+        Route::patch('/update/{id}', 'update');
+
+    });
 });
+  
+
 
 Route::controller(LokasiController::class)->group(function () {
-    Route::get('/lokasi', 'index');
-    Route::post('/lokasi/create', 'store');
-    Route::get('/lokasi/{id}', 'show');
+    Route::prefix('lokasi')->group(function () {
+        
+        Route::get('/', 'index');
+        Route::post('/create', 'store');
+        Route::delete('/delete/{id}', 'destroy');
+        Route::post('/{id}', 'show');
+        Route::patch('/update/{id}', 'update');
+
+    });
 });
