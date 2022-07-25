@@ -43,25 +43,24 @@ class UserController extends Controller
         //
         try{
             $request->validate([
-               'name' =>['required','string','max:255','unique:costumer'],
-               'email' => ['required', 'string','email','max:255','unique:costumer'],
-               'password' => ['required', 'string', Password::min(3)],
+               'name' =>['required','string','max:255','unique:users'],
+               'email' => ['required', 'string','email','max:255','unique:users'],
+               'password' => ['required', 'string', Password::min(6)],
             ]);   
             User::create([
                'name' => $request->name,
                'email' => $request->email,
-               'username' =>$request->username,
                'password' => Hash::make($request->password),
             ]);
    
-           $user= User::where('kode', $request->kode)->first();
+           $user= User::where('email', $request->email)->first();
    
             $tokenResult=$user->createToken('authToken')->plainTextToken;
    
             return ResponseFormatter::success([
                'access_token'=> $tokenResult,
                'token_type'=> 'Bearer',
-               'costumer'=>$user
+               'user'=>$user
             ], 'User Terdaftar');
            }catch(Exception $error){
                return ResponseFormatter::error([
@@ -114,5 +113,38 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function login(Request $request){
+        try{
+            $request->validate([
+               'email' => ['required', 'string','email','max:255'],
+               'password' => ['required', 'string', Password::min(6)],
+            ]);   
+            $user= User::where('email', $request->email)->first();
+            if($user){
+                if(Hash::check($request->password, $user->password)){
+                    $tokenResult=$user->createToken('authToken')->plainTextToken;
+                    return ResponseFormatter::success([
+                       'access_token'=> $tokenResult,
+                       'token_type'=> 'Bearer',
+                       'user'=>$user
+                    ], 'User Terdaftar');
+                }else{
+                    return ResponseFormatter::error([
+                        'message' => 'Password Salah',
+                    ], 'User gagal daftar',500);
+                }
+            }else{
+                return ResponseFormatter::error([
+                    'message' => 'Email tidak ditemukan',
+                ], 'User gagal daftar',500);
+            }
+           }catch(Exception $error){
+               return ResponseFormatter::error([
+                   'message' => 'Something went wrong!',
+                   'error' => $error,
+                ], 'User gagal daftar',500);
+           }
     }
 }
