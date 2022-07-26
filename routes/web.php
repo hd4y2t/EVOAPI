@@ -18,7 +18,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('tesapi', function () {
-    dd( Http::get('http://127.0.0.1:8000/api/lokasi')->json());
-});
-
