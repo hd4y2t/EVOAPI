@@ -114,6 +114,11 @@ class UserController extends Controller
     {
         //
     }
+    public function formLogin()
+    {
+        //
+        return view('login');
+    }
 
     public function login(Request $request){
         try{
