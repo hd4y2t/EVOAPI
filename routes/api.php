@@ -27,7 +27,25 @@ use Illuminate\Support\Facades\Route;
 
     Route::middleware(['auth:sanctum'])->group(function () {
                     
-        Route::controller(COAController::class)->group(function () {
+       Route::controller(LokasiController::class)->group(function () {
+            Route::prefix('lokasi1')->group(function () {
+                            
+                Route::get('/', 'index');
+                Route::post('/create', 'store');
+                Route::delete('/delete/{id}', 'destroy');
+                Route::post('/{id}', 'show');
+                Route::patch('/update/{id}', 'update');
+
+            });
+         });
+         
+        Route::controller(UserController::class)->group(function () {
+        
+            Route::post('/logout', 'logout');
+        });
+    });
+});
+  Route::controller(COAController::class)->group(function () {
             Route::prefix('coa')->group(function () {
 
                 Route::get('/', 'index');
@@ -50,5 +68,3 @@ use Illuminate\Support\Facades\Route;
 
             });
          });
-    });
-});

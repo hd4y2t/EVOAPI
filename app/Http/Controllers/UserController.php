@@ -138,18 +138,27 @@ class UserController extends Controller
                 }else{
                     return ResponseFormatter::error([
                         'message' => 'Password Salah',
-                    ], 'User gagal daftar',500);
+                    ], 'User gagal Login',500);
                 }
             }else{
                 return ResponseFormatter::error([
                     'message' => 'Email tidak ditemukan',
-                ], 'User gagal daftar',500);
+                ], 'User gagal Login',500);
             }
            }catch(Exception $error){
                return ResponseFormatter::error([
                    'message' => 'Something went wrong!',
                    'error' => $error,
-                ], 'User gagal daftar',500);
+                ], 'User gagal Login',500);
            }
     }
+    
+    public function logout(Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+        
+        return ResponseFormatter::success($token, 'Token berhasil dihapus');
+    }
+
+
 }
