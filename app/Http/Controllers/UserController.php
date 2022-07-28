@@ -130,11 +130,13 @@ class UserController extends Controller
             if($user){
                 if(Hash::check($request->password, $user->password)){
                     $tokenResult=$user->createToken('authToken')->plainTextToken;
+                    // $user->remember_token = $tokenResult;
+                    // $user->update();
                     return ResponseFormatter::success([
                        'access_token'=> $tokenResult,
                        'token_type'=> 'Bearer',
                        'user'=>$user
-                    ], 'User Terdaftar');
+                    ], 'Login Sukses');
                 }else{
                     return ResponseFormatter::error([
                         'message' => 'Password Salah',
