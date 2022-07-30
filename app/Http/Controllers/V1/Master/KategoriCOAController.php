@@ -16,7 +16,14 @@ class KategoriCOAController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+    //  public function __construct()
+    // {
+    //     $this->middleware('auth:sanctum');
+    // }
+
+     public function index()
     {
         //
         $kategori_coa = KategoriCOA::all();

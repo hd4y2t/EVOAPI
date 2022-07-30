@@ -17,7 +17,7 @@ class COA extends Model
         'posisi',
         'letak',
         'jns',
-        'id_lokasi',
+        'lokasi_id',
         'aktif',
         'pakai_budget',
         'lama_budget_harian',
@@ -25,6 +25,10 @@ class COA extends Model
         'budget_harian',
         'budget_bulanan',
         'flag_khusus',
-        'id_kategori_coa',
+        'kategori_coa',
     ];
+
+     public function kategori(){
+        return $this->belongsTo(KategoriCOA::class);
+    }
 }

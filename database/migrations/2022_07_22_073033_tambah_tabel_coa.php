@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('posisi')->length(1);
             $table->string('letak')->length(6);
             $table->string('jns')->length(20);
-            $table->bigInteger('id_lokasi');
+            $table->foreignId('lokasi_id');
             $table->char('aktif')->length(1);
             $table->char('pakai_budget')->length(1);
             $table->integer('lama_budget_harian');
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->float('budget_harian');
             $table->float('budget_bulanan');
             $table->char('flag_khusus')->length(1);
-            $table->bigInteger('id_kategori_coa');
+            $table->foreignId('kategori_id');
             $table->timestamps();
         });
     }

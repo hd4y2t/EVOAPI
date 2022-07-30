@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\V1\Master\COA;
 use App\Helpers\ResponseFormatter;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class COAController extends Controller
@@ -15,14 +16,20 @@ class COAController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //    public function __construct()
+    // {
+    //     $this->middleware('auth:sanctum');
+    // }
+
     public function index()
     {
-        //
-        $coa = COA::all();
-        return ResponseFormatter::success(
-            $coa,
-            'Data COA berhasil '
-        );
+        
+        $coa = COA::with('kategori');
+        return ResponseFormatter::success([
+            'coa'=>$coa,
+           
+        ], 'Data COA Berhasil didapat');
+        
     }
 
     /**
@@ -52,7 +59,7 @@ class COAController extends Controller
                 'posisi'                => ['required',],
                 'letak'                 => ['required'],
                 'jns'                   => ['required'],
-                'id_lokasi'             => ['required'],
+                'lokasi_id'             => ['required'],
                 'aktif'                 => ['required'],
                 'pakai_budget'          => ['required'],
                 'lama_budget_harian'    => ['required'],
@@ -60,7 +67,7 @@ class COAController extends Controller
                 'budget_harian'         => ['required'],
                 'budget_bulanan'        => ['required'],
                 'flag_khusus'           => ['required'],
-                'id_kategori_coa'       => ['required'],
+                'kategori_id'           => ['required'],
             ]);
 
             COA::create([
@@ -69,7 +76,7 @@ class COAController extends Controller
                 'posisi'                => $request->posisi,
                 'letak'                 => $request->letak,
                 'jns'                   => $request->jns,
-                'id_lokasi'             => $request->id_lokasi,
+                'lokasi_id'             => $request->lokasi_id,
                 'aktif'                 => $request->aktif,
                 'pakai_budget'          => $request->pakai_budget,
                 'lama_budget_harian'    => $request->lama_budget_harian,
@@ -77,7 +84,7 @@ class COAController extends Controller
                 'budget_harian'         => $request->budget_harian,
                 'budget_bulanan'        => $request->budget_bulanan,
                 'flag_khusus'           => $request->flag_khusus,
-                'id_kategori_coa'       => $request->id_kategori_coa,
+                'kategori_id'           => $request->kategori_id,
             ]);
             return ResponseFormatter::success([
                 'message' => 'Data COA berhasil ditambahkan',
@@ -144,7 +151,7 @@ class COAController extends Controller
                 'posisi'                => ['required|max:1'],
                 'letak'                 => ['required|'],
                 'jns'                   => ['required'],
-                'id_lokasi'             => ['required'],
+                'lokasi_id'             => ['required'],
                 'aktif'                 => ['required'],
                 'pakai_budget'          => ['required'],
                 'lama_budget_harian'    => ['required'],
@@ -152,7 +159,7 @@ class COAController extends Controller
                 'budget_harian'         => ['required'],
                 'budget_bulanan'        => ['required'],
                 'flag_khusus'           => ['required'],
-                'id_kategori_coa'       => ['required'],
+                'kategori_id'       => ['required'],
             ]);
 
             COA::where('id_coa',$id)->update($request->all());
