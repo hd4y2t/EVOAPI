@@ -24,7 +24,7 @@ class COAController extends Controller
     public function index()
     {
         
-        $coa = COA::with('kategori');
+        $coa = COA::all();
         return ResponseFormatter::success([
             'coa'=>$coa,
            
@@ -50,24 +50,23 @@ class COAController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
         try {
-            //code...
             $request->validate([
-                'kode_account'          => ['required', 'string', 'unique:coa'],
-                'nama'                  => ['required', 'string', 'max:100'],
-                'posisi'                => ['required',],
-                'letak'                 => ['required'],
-                'jns'                   => ['required'],
-                'lokasi_id'             => ['required'],
-                'aktif'                 => ['required'],
-                'pakai_budget'          => ['required'],
-                'lama_budget_harian'    => ['required'],
-                'lama_budget_bulanan'   => ['required'],
-                'budget_harian'         => ['required'],
-                'budget_bulanan'        => ['required'],
-                'flag_khusus'           => ['required'],
-                'kategori_id'           => ['required'],
+                'kode_account'          => 'required|string|unique:coa',
+                'nama'                  => 'required|string|max:100',
+                'posisi'                => 'required',
+                'letak'                 => 'required',
+                'jns'                   => 'required',
+                'lokasi_id'             => 'required',
+                'aktif'                 => 'required',
+                'pakai_budget'          => 'required',
+                'lama_budget_harian'    => 'required',
+                'lama_budget_bulanan'   => 'required',
+                'budget_harian'         => 'required',
+                'budget_bulanan'        => 'required',
+                'flag_khusus'           => 'required',
+                'kategori_id'           => 'required',
             ]);
 
             COA::create([

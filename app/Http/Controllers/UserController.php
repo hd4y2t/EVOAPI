@@ -136,7 +136,7 @@ class UserController extends Controller
                        'access_token'=> $tokenResult,
                        'token_type'=> 'Bearer',
                        'user'=>$user
-                    ], 'Login Sukses');
+                    ], 'Selamat Datang '.$user['name']);
                 }else{
                     return ResponseFormatter::error([
                         'message' => 'Password Salah',

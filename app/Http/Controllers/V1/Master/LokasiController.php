@@ -54,7 +54,7 @@ class LokasiController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'required|max:50|unique:lokasi',
+                'nama' => 'required|max:50',
                 'alamat' => 'required|max:150',
                 'hp' => 'required|numeric',
                 'inisial_faktur' => 'required',
@@ -128,13 +128,12 @@ class LokasiController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'required|unique:lokasi',
-                'alamat' => 'required',
+                'nama' => 'required|max:50',
+                'alamat' => 'required|max:150',
                 'hp' => 'required',
                 'inisial_faktur' => 'required',
             ]);
 
-          
             Lokasi::where('id_lokasi',$id)->update($request->all());
             $a = Lokasi::where('id_lokasi', $id)->first();
 

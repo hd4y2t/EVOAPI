@@ -23,10 +23,36 @@ use App\Http\Controllers\V1\Master\KategoriCOAController;
     Route::post('/register', 'store');
             // Route::delete('/delete/{id}', 'destroy');
             // Route::post('/{id}', 'show');
-            // Route::patch('/update/{id}', 'update');
+            // Route::put('/update/{id}', 'update');
 
    Route::group(['middleware' => ['auth:sanctum','verified']],function () {
      
+               
+          
+                Route::controller(COAController::class)->group(function () {
+                  Route::prefix('coa')->group(function () {
+                                  
+                      Route::get('/', 'index');
+                      Route::post('/create', 'store');
+                      Route::delete('/delete/{id}', 'destroy');
+                      Route::post('/{id}', 'show');
+                      Route::put('/update/{id}', 'update');
+      
+                  });
+               });
+               
+                Route::controller(KategoriCOAController::class)->group(function () {
+                  Route::prefix('kategori_coa')->group(function () {
+                                  
+                      Route::get('/', 'index');
+                      Route::post('/create', 'store');
+                      Route::delete('/delete/{id}', 'destroy');
+                      Route::post('/{id}', 'show');
+                      Route::put('/update/{id}', 'update');
+      
+                  });
+               });
+               
                 Route::controller(LokasiController::class)->group(function () {
                   Route::prefix('lokasi')->group(function () {
                                   
@@ -34,40 +60,15 @@ use App\Http\Controllers\V1\Master\KategoriCOAController;
                       Route::post('/create', 'store');
                       Route::delete('/delete/{id}', 'destroy');
                       Route::post('/{id}', 'show');
-                      Route::patch('/update/{id}', 'update');
+                      Route::put('/update/{id}', 'update');
       
                   });
-               });
-          
+               });     
 
-               
         Route::controller(UserController::class)->group(function () {
         
             Route::post('/logout', 'logout');
         });
-    });
+    });  
     
-      Route::controller(COAController::class)->group(function () {
-                  Route::prefix('coa')->group(function () {
-                                  
-                      Route::get('/', 'index');
-                      Route::post('/create', 'store');
-                      Route::delete('/delete/{id}', 'destroy');
-                      Route::post('/{id}', 'show');
-                      Route::patch('/update/{id}', 'update');
-      
-                  });
-               });
-            Route::controller(KategoriCOAController::class)->group(function () {
-                  Route::prefix('kategori_coa')->group(function () {
-                                  
-                      Route::get('/', 'index');
-                      Route::post('/create', 'store');
-                      Route::delete('/delete/{id}', 'destroy');
-                      Route::post('/{id}', 'show');
-                      Route::patch('/update/{id}', 'update');
-      
-                  });
-               });
-            
 });

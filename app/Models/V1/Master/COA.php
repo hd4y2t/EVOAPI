@@ -28,7 +28,7 @@ class COA extends Model
         'kategori_coa',
     ];
 
-     public function kategori(){
-        return $this->belongsTo(KategoriCOA::class);
+     public function kategoriCOA(){
+        return $this->belongsTo(KategoriCOA::class,'id_kategori_coa', 'kategori_coa');
     }
 }

@@ -13,4 +13,8 @@ class KategoriCOA extends Model
     protected $fillable = [
         'nama',
     ];
+
+       public function coa(){
+        return $this->hasMany(COA::class,'kategori_id', 'id_kategori_coa');
+    }
 }
