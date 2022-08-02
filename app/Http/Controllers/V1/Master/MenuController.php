@@ -4,32 +4,19 @@ namespace App\Http\Controllers\V1\Master;
 
 use Exception;
 use Illuminate\Http\Request;
-use App\Models\V1\Master\Lokasi;
+use App\Models\V1\Master\Menu;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Expression;
 
-class LokasiController extends Controller
+class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-     
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
-
     public function index()
     {
         //
-        $lokasi = Lokasi::all();
+        $menu = Menu::all();
         return ResponseFormatter::success([
-            'lokasi' => $lokasi,
-         ], 'Data lokasi berhasil diambil');
+            'menu' => $menu,
+         ], 'Data menu berhasil diambil');
     }
 
     /**
@@ -55,27 +42,23 @@ class LokasiController extends Controller
             //code...
             $request->validate([
                 'nama' => 'required|max:50',
-                'alamat' => 'required|max:150',
-                'hp' => 'required|numeric',
-                'inisial_faktur' => 'required',
+                'route' => 'required|max:200',
             ]);
 
-            Lokasi::create([
+            Menu::create([
                 'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'hp' => $request->hp,
-                'inisial_faktur' => $request->inisial_faktur,
+                'route' => $request->route,
             ]);
             
             return ResponseFormatter::success([
-                'lokasi'=>$request->all()
-            ],'Data Lokasi berhasil ditambahkan');
+                'menu'=>$request->all()
+            ],'Data menu berhasil ditambahkan');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Lokasi gagal ditambah');
+            ], 'menu gagal ditambah');
             
         }
     }
@@ -91,16 +74,16 @@ class LokasiController extends Controller
         //
         try {
             //code...
-            $lokasi = Lokasi::where('id_lokasi',$id)->first();
+            $menu = Menu::where('id_menu',$id)->first();
             return ResponseFormatter::success([
-                'lokasi' => $lokasi,
-            ], 'Data lokasi berhasil diambil');
+                'menu' => $menu,
+            ], 'Data menu berhasil diambil');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Data lokasi gagal diambil');
+            ], 'Data menu gagal diambil');
         }
     }
 
@@ -128,24 +111,22 @@ class LokasiController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'max:50',
-                'alamat' => 'max:150',
-                'hp' => 'numeric',
-                'inisial_faktur' => 'string',
+                'nama' => 'max:100',
+                'route' => 'max:200'
             ]);
 
-            Lokasi::where('id_lokasi',$id)->update($request->all());
-            $a = Lokasi::where('id_lokasi', $id)->first();
+            menu::where('id_menu',$id)->update($request->all());
+            $a = menu::where('id_menu', $id)->first();
 
             return ResponseFormatter::success([
-                'lokasi'=> $a
-            ],'Data Lokasi berhasil diubah');
+                'menu'=> $a
+            ],'Data menu berhasil diubah');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Data Lokasi gagal diubah');
+            ], 'Data menu gagal diubah');
             
         }
     }
@@ -161,17 +142,18 @@ class LokasiController extends Controller
         //
         try {
             //code...
-            Lokasi::where('id_lokasi',$id)->delete();
+            Menu::where('id_menu',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data lokasi berhasil dihapus'
-            ],'Data Lokasi berhasil dihapus');
+                'message' => 'Data menu berhasil dihapus'
+            ],'Data menu berhasil dihapus');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Data Lokasi gagal dihapus');
+            ], 'Data menu gagal dihapus');
             
         }
     }
 }
+

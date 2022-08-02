@@ -16,9 +16,51 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     
+    public function login(Request $request){
+        try{
+            $request->validate([
+               'email' => ['required', 'string','email','max:255'],
+               'password' => ['required', 'string', Password::min(6)],
+            ]);   
+            $user= User::where('email', $request->email)->first();
+            if($user){
+                if(Hash::check($request->password, $user->password)){
+                    $tokenResult=$user->createToken('authToken')->plainTextToken;
+                    // $user->remember_token = $tokenResult;
+                    // $user->update();
+                    return ResponseFormatter::success([
+                       'access_token'=> $tokenResult,
+                       'token_type'=> 'Bearer',
+                       'user'=>$user
+                    ], 'Selamat Datang '.$user['name']);
+                }else{
+                    return ResponseFormatter::error([
+                        'message' => 'Password Salah',
+                    ], 'User gagal Login',500);
+                }
+            }else{
+                return ResponseFormatter::error([
+                    'message' => 'Email tidak ditemukan',
+                ], 'User gagal Login',500);
+            }
+           }catch(Exception $error){
+               return ResponseFormatter::error([
+                   'message' => 'Something went wrong!',
+                   'error' => $error,
+                ], 'User gagal Login',500);
+           }
+    }
+    
     public function index()
     {
         //
+         //
+        $user = User::all();
+        return ResponseFormatter::success([
+            'user' => $user,
+         ], 'Data user berhasil diambil');
         
     }
 
@@ -102,6 +144,28 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try{
+            $request->validate([
+               'password' => [ 'string', Password::min(6)],
+            ]);   
+            User::create([
+               'password' => Hash::make($request->password),
+            ]);
+   
+           $user= User::where('email', $request->email)->first();
+           $tokenResult=$user->createToken('authToken')->plainTextToken;
+           User::where('id', $id)->update($request->all());
+            return ResponseFormatter::success([
+               'access_token'=> $tokenResult,
+               'token_type'=> 'Bearer',
+               'user'=>$user
+            ], 'User Terdaftar');
+           }catch(Exception $error){
+               return ResponseFormatter::error([
+                   'message' => 'Something went wrong!',
+                   'error' => $error,
+                ], 'User gagal daftar',500);
+           }
     }
 
     /**
@@ -113,48 +177,21 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function formLogin()
-    {
-        //
-        return view('login');
+        try {
+            //code...
+            User::where('id',$id)->delete();
+            return ResponseFormatter::success([
+                'message' => 'Data user berhasil dihapus'
+            ],'Data User berhasil dihapus');
+        } catch (Exception $error) {
+            //throw $th;
+            return ResponseFormatter::error([
+                'message' => $error->getMessage(),
+                'error' => $error
+            ], 'Data User gagal dihapus');
+        }
     }
 
-    public function login(Request $request){
-        try{
-            $request->validate([
-               'email' => ['required', 'string','email','max:255'],
-               'password' => ['required', 'string', Password::min(6)],
-            ]);   
-            $user= User::where('email', $request->email)->first();
-            if($user){
-                if(Hash::check($request->password, $user->password)){
-                    $tokenResult=$user->createToken('authToken')->plainTextToken;
-                    // $user->remember_token = $tokenResult;
-                    // $user->update();
-                    return ResponseFormatter::success([
-                       'access_token'=> $tokenResult,
-                       'token_type'=> 'Bearer',
-                       'user'=>$user
-                    ], 'Selamat Datang '.$user['name']);
-                }else{
-                    return ResponseFormatter::error([
-                        'message' => 'Password Salah',
-                    ], 'User gagal Login',500);
-                }
-            }else{
-                return ResponseFormatter::error([
-                    'message' => 'Email tidak ditemukan',
-                ], 'User gagal Login',500);
-            }
-           }catch(Exception $error){
-               return ResponseFormatter::error([
-                   'message' => 'Something went wrong!',
-                   'error' => $error,
-                ], 'User gagal Login',500);
-           }
-    }
-    
     public function logout(Request $request)
     {
         $token = $request->user()->currentAccessToken()->delete();

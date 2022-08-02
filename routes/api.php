@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\V1\Master\CoaBankKasController;
 use App\Http\Controllers\V1\Master\COAController;
 use App\Http\Controllers\V1\Master\LokasiController;
 use App\Http\Controllers\V1\Master\KategoriCOAController;
+use App\Http\Controllers\V1\Master\MenuController;
+use App\Http\Controllers\V1\Master\RoleMenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +23,20 @@ use App\Http\Controllers\V1\Master\KategoriCOAController;
  Route::controller(UserController::class)->group(function () {
  
     Route::post('/login', 'login');
-    Route::post('/register', 'store');
+                    Route::post('/register', 'store');
             // Route::delete('/delete/{id}', 'destroy');
             // Route::post('/{id}', 'show');
             // Route::put('/update/{id}', 'update');
+ });
+   Route::group(['middleware' => ['auth:sanctum','verified']],function () 
+   {
+               Route::controller(UserController::class)->group(function () {
+                    Route::get('/','index');
+                    Route::delete('/delete/{id}', 'destroy');
+                    Route::post('/{id}', 'show');
+                    Route::put('/update/{id}', 'update');
+               });
 
-   Route::group(['middleware' => ['auth:sanctum','verified']],function () {
-     
-               
-          
                 Route::controller(COAController::class)->group(function () {
                   Route::prefix('coa')->group(function () {
                                   
@@ -59,6 +67,39 @@ use App\Http\Controllers\V1\Master\KategoriCOAController;
                       Route::get('/', 'index');
                       Route::post('/create', 'store');
                       Route::delete('/delete/{id}', 'destroy');
+                      Route::get('/{id}', 'show');
+                      Route::put('/update/{id}', 'update');
+      
+                  });
+               });     
+                Route::controller(MenuController::class)->group(function () {
+                  Route::prefix('menu')->group(function () {
+                                  
+                      Route::get('/', 'index');
+                      Route::post('/create', 'store');
+                      Route::delete('/delete/{id}', 'destroy');
+                      Route::post('/{id}', 'show');
+                      Route::put('/update/{id}', 'update');
+      
+                  });
+               });     
+                Route::controller(RoleMenuController::class)->group(function () {
+                  Route::prefix('role_menu')->group(function () {
+                                  
+                      Route::get('/', 'index');
+                      Route::post('/create', 'store');
+                      Route::delete('/delete/{id}', 'destroy');
+                      Route::post('/{id}', 'show');
+                      Route::put('/update/{id}', 'update');
+      
+                  });
+               });     
+                Route::controller(CoaBankKasController::class)->group(function () {
+                  Route::prefix('coa_bank')->group(function () {
+                                  
+                      Route::get('/', 'index');
+                      Route::post('/create', 'store');
+                      Route::delete('/delete/{id}', 'destroy');
                       Route::post('/{id}', 'show');
                       Route::put('/update/{id}', 'update');
       
@@ -70,5 +111,3 @@ use App\Http\Controllers\V1\Master\KategoriCOAController;
             Route::post('/logout', 'logout');
         });
     });  
-    
-});

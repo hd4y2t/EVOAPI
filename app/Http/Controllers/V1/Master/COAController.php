@@ -145,20 +145,20 @@ class COAController extends Controller
         //
         try {
             $request->validate([
-                'kode_account'          => ['required|string|unique:coa'],
-                'nama'                  => ['required|string|max:100'],
-                'posisi'                => ['required|max:1'],
-                'letak'                 => ['required|'],
-                'jns'                   => ['required'],
-                'lokasi_id'             => ['required'],
-                'aktif'                 => ['required'],
-                'pakai_budget'          => ['required'],
-                'lama_budget_harian'    => ['required'],
-                'lama_budget_bulanan'   => ['required'],
-                'budget_harian'         => ['required'],
-                'budget_bulanan'        => ['required'],
-                'flag_khusus'           => ['required'],
-                'kategori_id'       => ['required'],
+                 'kode_account'          => 'string|unique:coa',
+                'nama'                  => 'string|max:100',
+                'posisi'                => '',
+                'letak'                 => '',
+                'jns'                   => '',
+                'lokasi_id'             => '',
+                'aktif'                 => '',
+                'pakai_budget'          => '',
+                'lama_budget_harian'    => '',
+                'lama_budget_bulanan'   => '',
+                'budget_harian'         => '',
+                'budget_bulanan'        => '',
+                'flag_khusus'           => '',
+                'kategori_id'           => '',
             ]);
 
             COA::where('id_coa',$id)->update($request->all());

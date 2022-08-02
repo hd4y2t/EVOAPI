@@ -150,8 +150,7 @@ class KategoriCOAController extends Controller
         //
         try {
             //code...
-            $kategori_coa = KategoriCOA::findOrFail($id);
-            $kategori_coa->delete();
+            $kategori_coa = KategoriCOA::where('id_kategori_coa',$id)->delete();
             return ResponseFormatter::success([
                 'message' => 'Data kategori COA berhasil dihapus',
             ], 'Data kategori COA berhasil dihapus');

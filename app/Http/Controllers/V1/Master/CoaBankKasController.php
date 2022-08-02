@@ -4,43 +4,20 @@ namespace App\Http\Controllers\V1\Master;
 
 use Exception;
 use Illuminate\Http\Request;
-use App\Models\V1\Master\Lokasi;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Expression;
+use App\Models\V1\Master\CoaBankKas;
 
-class LokasiController extends Controller
+class CoaBankKasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-     
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
-
-    public function index()
+  public function index()
     {
         //
-        $lokasi = Lokasi::all();
+        $coabank = CoaBankKas::all();
         return ResponseFormatter::success([
-            'lokasi' => $lokasi,
-         ], 'Data lokasi berhasil diambil');
+            'coaBank ' => $coabank,
+         ], 'Data Coa Bank berhasil diambil');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function create()
-    // {
-    //     //
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -54,28 +31,26 @@ class LokasiController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'required|max:50',
-                'alamat' => 'required|max:150',
-                'hp' => 'required|numeric',
-                'inisial_faktur' => 'required',
+                'coa_id' => 'required',
+                'jenis' => 'required',
+                'inisial' => 'required',
             ]);
 
-            Lokasi::create([
-                'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'hp' => $request->hp,
-                'inisial_faktur' => $request->inisial_faktur,
+            CoaBankKas::create([
+                'coa_id' => $request->coa_id,
+                'jenis' => $request->jenis,
+                'inisial' => $request->inisial,
             ]);
             
             return ResponseFormatter::success([
-                'lokasi'=>$request->all()
-            ],'Data Lokasi berhasil ditambahkan');
+                'coabank'=>$request->all()
+            ],'Data Coa Bank berhasil ditambahkan');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Lokasi gagal ditambah');
+            ], 'Coa Bank gagal ditambah');
             
         }
     }
@@ -91,16 +66,16 @@ class LokasiController extends Controller
         //
         try {
             //code...
-            $lokasi = Lokasi::where('id_lokasi',$id)->first();
+            $coabank = CoaBankKas::where('id_coa_bank',$id)->first();
             return ResponseFormatter::success([
-                'lokasi' => $lokasi,
-            ], 'Data lokasi berhasil diambil');
+                'coaBank' => $coabank,
+            ], 'Data Coa Bank berhasil diambil');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Data lokasi gagal diambil');
+            ], 'Data Coa Bank gagal diambil');
         }
     }
 
@@ -128,24 +103,23 @@ class LokasiController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'max:50',
-                'alamat' => 'max:150',
-                'hp' => 'numeric',
-                'inisial_faktur' => 'string',
+                'coa_id' => 'required',
+                'jenis' => 'required',
+                'inisial' => 'required',
             ]);
 
-            Lokasi::where('id_lokasi',$id)->update($request->all());
-            $a = Lokasi::where('id_lokasi', $id)->first();
+            CoaBankKas::where('id_coa_bank_kas',$id)->update($request->all());
+            $a = CoaBankKas::where('id_coa_bank_kas', $id)->first();
 
             return ResponseFormatter::success([
-                'lokasi'=> $a
-            ],'Data Lokasi berhasil diubah');
+                'coaBank'=> $a
+            ],'Data Coa Bank berhasil diubah');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Data Lokasi gagal diubah');
+            ], 'Data Coa Bank gagal diubah');
             
         }
     }
@@ -161,16 +135,16 @@ class LokasiController extends Controller
         //
         try {
             //code...
-            Lokasi::where('id_lokasi',$id)->delete();
+            CoaBankKas::where('id_coa_bank_kas',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data lokasi berhasil dihapus'
-            ],'Data Lokasi berhasil dihapus');
+                'message' => 'Data Coa Bank berhasil dihapus'
+            ],'Data Coa Bank berhasil dihapus');
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
                 'message' => $error->getMessage(),
                 'error' => $error
-            ], 'Data Lokasi gagal dihapus');
+            ], 'Data Coa Bank gagal dihapus');
             
         }
     }
