@@ -25,7 +25,7 @@ class COA extends Model
         'budget_harian',
         'budget_bulanan',
         'flag_khusus',
-        'kategori_coa',
+        'kategori_id',
     ];
 
      public function kategoriCOA(){
