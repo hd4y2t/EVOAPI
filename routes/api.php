@@ -31,11 +31,16 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
    Route::group(['middleware' => ['auth:sanctum','verified']],function () 
    {
                Route::controller(UserController::class)->group(function () {
-                    Route::get('/','index');
-                    Route::delete('/delete/{id}', 'destroy');
-                    Route::post('/{id}', 'show');
-                    Route::put('/update/{id}', 'update');
-               });
+                    Route::prefix('user')->group(function () {                 
+
+                        Route::get('/','index');
+                        Route::delete('/delete/{id}', 'destroy');
+                        Route::post('/{id}', 'show');
+                        Route::put('/update/{id}', 'update');
+
+                    });
+
+                });
 
                 Route::controller(COAController::class)->group(function () {
                   Route::prefix('coa')->group(function () {

@@ -8,6 +8,7 @@ use App\Models\V1\Master\COA;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\V1\Master\KategoriCOA;
 
 class COAController extends Controller
 {
@@ -27,7 +28,6 @@ class COAController extends Controller
         $coa = COA::all();
         return ResponseFormatter::success([
             'coa'=>$coa,
-           
         ], 'Data COA Berhasil didapat');
         
     }

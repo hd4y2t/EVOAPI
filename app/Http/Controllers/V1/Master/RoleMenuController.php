@@ -17,7 +17,7 @@ class RoleMenuController extends Controller
         // $role_menu = RoleMenu::with('user','menu');
         $role_menu = RoleMenu::all();
         return ResponseFormatter::success([
-            'role_menu ' => $role_menu,
+            'role_menu' => $role_menu,
          ], 'Data Role Menu berhasil diambil');
     }
 
@@ -113,16 +113,14 @@ class RoleMenuController extends Controller
         try {
             //code...
             $request->validate([
-                'user_id' => 'max:100',
-                'menu_id' => 'max:200'
+                'menu_id' => 'max:200',
+                'user_id' => 'max:100'
             ]);
 
-           $a= RoleMenu::where('id_role_menu',$id)->first();
-           $a->update($request->all);
-            // $a = RoleMenu::where('id_role_menu', $id)->first();
+           $a= RoleMenu::where('id_role_menu',$id)->update($request->all());
 
             return ResponseFormatter::success([
-                'role_menu'=> $a
+                'role_menu'=> $request->all()
             ],'Data Role Menu berhasil diubah');
         } catch (Exception $error) {
             //throw $th;

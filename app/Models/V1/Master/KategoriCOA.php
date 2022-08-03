@@ -15,6 +15,6 @@ class KategoriCOA extends Model
     ];
 
        public function coa(){
-        return $this->hasMany(COA::class,'kategori_id', 'id_kategori_coa');
+        return $this->hasOne(COA::class,'kategori_id', 'id_kategori_coa');
     }
 }
