@@ -134,8 +134,8 @@ class LokasiController extends Controller
                 'inisial_faktur' => 'string',
             ]);
 
-            Lokasi::where('id_lokasi',$id)->update($request->all());
-            $a = Lokasi::where('id_lokasi', $id)->first();
+            $a = Lokasi::where('id_lokasi',$id)->update($request->all());
+            // $a = Lokasi::where('id_lokasi', $id)->first();
 
             return ResponseFormatter::success([
                 'lokasi'=> $a

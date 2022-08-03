@@ -120,15 +120,12 @@ class KategoriCOAController extends Controller
         try {
             //code...
             $request->validate([
-                'nama' => 'required',
+                'nama',
             ]);
-            $kategori_coa = KategoriCOA::findOrFail($id);
-            $kategori_coa->update([
-                'nama' => $request->nama,
-            ]);
+            
+            $a = KategoriCOA::where('id_kategori_coa',$id)->update($request->all());
             return ResponseFormatter::success([
-                'message' => 'Data kategori COA berhasil diubah',
-                'kategori_coa' => $request->all(),
+                'kategori_coa' => $a,
             ], 'Data kategori COA berhasil diubah');
         } catch (Exception $error) {
             //throw $th;
