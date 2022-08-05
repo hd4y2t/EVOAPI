@@ -186,7 +186,6 @@ class COAController extends Controller
     {
         //
         try {
-            // $coa = COA::where('id_coa', $id)->first();
             COA::where('id_coa', $id)->delete();
             return ResponseFormatter::success([
                 'message' => 'Data COA berhasil dihapus'

@@ -146,19 +146,15 @@ class UserController extends Controller
         //
         try{
             $request->validate([
+               'name' => [ 'string','max:255'],
+               'email' => [ 'string','max:255','email','unique:users'],
                'password' => [ 'string', Password::min(6)],
             ]);   
-            User::create([
-               'password' => Hash::make($request->password),
-            ]);
-   
-           $user= User::where('email', $request->email)->first();
-           $tokenResult=$user->createToken('authToken')->plainTextToken;
-           User::where('id', $id)->update($request->all());
+         
+            User::where('id', $id)->update($request->all());
+            $user= User::where('email', $request->email)->first();
             return ResponseFormatter::success([
-               'access_token'=> $tokenResult,
-               'token_type'=> 'Bearer',
-               'user'=>$user
+              'user'=>$user
             ], 'User Terdaftar');
            }catch(Exception $error){
                return ResponseFormatter::error([
@@ -178,7 +174,6 @@ class UserController extends Controller
     {
         //
         try {
-            //code...
             User::where('id',$id)->delete();
             return ResponseFormatter::success([
                 'message' => 'Data user berhasil dihapus'

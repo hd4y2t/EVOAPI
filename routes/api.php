@@ -23,7 +23,7 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
  Route::controller(UserController::class)->group(function () {
  
     Route::post('/login', 'login');
-                    Route::post('/register', 'store');
+                    // Route::post('/register', 'store');
             // Route::delete('/delete/{id}', 'destroy');
             // Route::post('/{id}', 'show');
             // Route::put('/update/{id}', 'update');
@@ -35,6 +35,7 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
 
                         Route::get('/','index');
                         Route::delete('/delete/{id}', 'destroy');
+                        Route::post('/register', 'store');
                         Route::post('/{id}', 'show');
                         Route::put('/update/{id}', 'update');
 
