@@ -12,9 +12,11 @@ class CoaBankKas extends Model
 
     protected $fillable = [
         'coa_id',
-        'nama',
         'jenis',
         'inisial',
     ];
 
+     public function coa(){
+        return $this->belongsTo(COA::class,'coa_id','id_coa');
+    }
 }

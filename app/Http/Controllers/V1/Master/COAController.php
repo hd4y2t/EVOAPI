@@ -25,7 +25,7 @@ class COAController extends Controller
     public function index()
     {
         
-        $coa = COA::all();
+        $coa = COA::with('kategori_coa')->get();
         return ResponseFormatter::success([
             'coa'=>$coa,
         ], 'Data COA Berhasil didapat');
@@ -145,7 +145,7 @@ class COAController extends Controller
         //
         try {
             $request->validate([
-                 'kode_account'          => 'string|unique:coa',
+                 'kode_account'          => 'string',
                 'nama'                  => 'string|max:100',
                 'posisi'                => '',
                 'letak'                 => '',

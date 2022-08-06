@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
+use Hamcrest\Core\IsSame;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -148,10 +149,33 @@ class UserController extends Controller
             $request->validate([
                'name' => [ 'string','max:255'],
                'email' => [ 'string','max:255','email','unique:users'],
-               'password' => [ 'string', Password::min(6)],
             ]);   
          
             User::where('id', $id)->update($request->all());
+            $user= User::where('email', $request->email)->first();
+            return ResponseFormatter::success([
+              'user'=>$user
+            ], 'User Terdaftar');
+           }catch(Exception $error){
+               return ResponseFormatter::error([
+                   'message' => 'Something went wrong!',
+                   'error' => $error,
+                ], 'User gagal daftar',500);
+           }
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        //
+        try{
+            $request->validate([
+               'password' => [ 'string', Password::min(6)],
+               'password2' => [ 'string', Password::min(6) ],
+            ]);   
+         
+            User::where('id', $id)->update([
+               'password' => Hash::make($request->password2),
+            ]);
             $user= User::where('email', $request->email)->first();
             return ResponseFormatter::success([
               'user'=>$user

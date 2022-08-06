@@ -29,6 +29,6 @@ class COA extends Model
     ];
 
      public function kategori_coa(){
-        return $this->hasOne(KategoriCOA::class,'kategori_id','id_kategori_coa');
+        return $this->belongsTo(KategoriCOA::class,'kategori_id','id_kategori_coa');
     }
 }

@@ -15,7 +15,7 @@ class RoleMenuController extends Controller
     {
         //
         // $role_menu = RoleMenu::with('user','menu');
-        $role_menu = RoleMenu::all();
+        $role_menu = RoleMenu::with('user','menu')->get();
         return ResponseFormatter::success([
             'role_menu' => $role_menu,
          ], 'Data Role Menu berhasil diambil');

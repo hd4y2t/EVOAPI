@@ -13,9 +13,9 @@ class CoaBankKasController extends Controller
   public function index()
     {
         //
-        $coabank = CoaBankKas::all();
+        $coabank = CoaBankKas::with('coa')->get();  
         return ResponseFormatter::success([
-            'coaBank ' => $coabank,
+            'coa_bank' => $coabank,
          ], 'Data Coa Bank berhasil diambil');
     }
 
@@ -43,7 +43,7 @@ class CoaBankKasController extends Controller
             ]);
             
             return ResponseFormatter::success([
-                'coabank'=>$request->all()
+                'coa_bank'=>$request->all()
             ],'Data Coa Bank berhasil ditambahkan');
         } catch (Exception $error) {
             //throw $th;
@@ -68,7 +68,7 @@ class CoaBankKasController extends Controller
             //code...
             $coabank = CoaBankKas::where('id_coa_bank',$id)->first();
             return ResponseFormatter::success([
-                'coaBank' => $coabank,
+                'coa_bank' => $coabank,
             ], 'Data Coa Bank berhasil diambil');
         } catch (Exception $error) {
             //throw $th;
@@ -112,7 +112,7 @@ class CoaBankKasController extends Controller
             $a = CoaBankKas::where('id_coa_bank_kas', $id)->first();
 
             return ResponseFormatter::success([
-                'coaBank'=> $a
+                'coa_bank'=> $a
             ],'Data Coa Bank berhasil diubah');
         } catch (Exception $error) {
             //throw $th;

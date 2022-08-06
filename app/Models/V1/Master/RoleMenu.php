@@ -18,10 +18,10 @@ class RoleMenu extends Model
 
      
      public function user(){
-        return $this->hasMany(User::class,'user_id', 'id_user');
+        return $this->belongsTo(User::class,'user_id', 'id');
     }
 
      public function menu(){
-        return $this->hasMany(Menu::class,'menu_id', 'id_menu');
+        return $this->belongsTo(Menu::class,'menu_id', 'id_menu');
     }
 }

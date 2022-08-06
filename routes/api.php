@@ -38,6 +38,7 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
                         Route::post('/register', 'store');
                         Route::post('/{id}', 'show');
                         Route::put('/update/{id}', 'update');
+                        Route::put('/cp/{id}', 'changePassword');
 
                     });
 
