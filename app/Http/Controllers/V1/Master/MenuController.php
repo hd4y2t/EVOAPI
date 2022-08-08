@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class MenuController extends Controller
 {
-    public function index()
+    public function show_all()
     {
         //
         $menu = Menu::all();
@@ -69,7 +69,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_by_id($id)
     {
         //
         try {
@@ -87,16 +87,6 @@ class MenuController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -105,7 +95,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_by_id(Request $request, $id)
     {
         //
         try {
@@ -137,7 +127,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete_by_id($id)
     {
         //
         try {

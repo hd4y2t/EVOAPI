@@ -10,7 +10,7 @@ use App\Models\V1\Master\CoaBankKas;
 
 class CoaBankKasController extends Controller
 {
-  public function index()
+  public function show_all()
     {
         //
         $coabank = CoaBankKas::with('coa')->get();  
@@ -61,7 +61,7 @@ class CoaBankKasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_by_id($id)
     {
         //
         try {
@@ -79,16 +79,6 @@ class CoaBankKasController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -97,7 +87,7 @@ class CoaBankKasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_by_id(Request $request, $id)
     {
         //
         try {
@@ -130,7 +120,7 @@ class CoaBankKasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete_by_id($id)
     {
         //
         try {

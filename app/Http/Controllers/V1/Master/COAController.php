@@ -22,7 +22,7 @@ class COAController extends Controller
     //     $this->middleware('auth:sanctum');
     // }
 
-    public function index()
+    public function show_all()
     {
         
         $coa = COA::with('kategori_coa')->get();
@@ -103,7 +103,7 @@ class COAController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_by_id($id)
     {
         //
         try {
@@ -140,7 +140,7 @@ class COAController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_by_id(Request $request, $id)
     {
         //
         try {
@@ -182,7 +182,7 @@ class COAController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete_by_id($id)
     {
         //
         try {

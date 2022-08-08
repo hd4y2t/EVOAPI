@@ -54,7 +54,7 @@ class UserController extends Controller
            }
     }
     
-    public function index()
+    public function show_all()
     {
         //
          //
@@ -119,7 +119,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_by_id($id)
     {
         //
     }
@@ -142,7 +142,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_by_id(Request $request, $id)
     {
         //
         try{
@@ -194,7 +194,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete_by_id($id)
     {
         //
         try {

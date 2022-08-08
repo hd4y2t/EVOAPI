@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class RoleMenuController extends Controller
 {
    
-    public function index()
+    public function show_all()
     {
         //
         // $role_menu = RoleMenu::with('user','menu');
@@ -71,7 +71,7 @@ class RoleMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_by_id($id)
     {
         //
         try {
@@ -107,7 +107,7 @@ class RoleMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_by_id(Request $request, $id)
     {
         //
         try {
@@ -138,7 +138,7 @@ class RoleMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete_by_id($id)
     {
         //
         try {
