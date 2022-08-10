@@ -16,7 +16,7 @@ class CoaBankKasController extends Controller
         $coabank = CoaBankKas::with('coa')->get();  
         return ResponseFormatter::success([
             'coa_bank' => $coabank,
-         ], 'Data Coa Bank berhasil diambil');
+         ], __('messages.coa_bank_kas_controller.berhasil_diambil'));
     }
 
     /**
@@ -44,13 +44,13 @@ class CoaBankKasController extends Controller
             
             return ResponseFormatter::success([
                 'coa_bank'=>$request->all()
-            ],'Data Coa Bank berhasil ditambahkan');
+            ],__('messages.coa_bank_kas_controller.berhasil_ditambah'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' =>__('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Coa Bank gagal ditambah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }
@@ -69,13 +69,13 @@ class CoaBankKasController extends Controller
             $coabank = CoaBankKas::where('id_coa_bank',$id)->first();
             return ResponseFormatter::success([
                 'coa_bank' => $coabank,
-            ], 'Data Coa Bank berhasil diambil');
+            ],__('messages.coa_bank_kas_controller.berhasil_diambil'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' =>  __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Coa Bank gagal diambil');
+            ],__('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -102,14 +102,14 @@ class CoaBankKasController extends Controller
             $a = CoaBankKas::where('id_coa_bank_kas', $id)->first();
 
             return ResponseFormatter::success([
-                'coa_bank'=> $a
-            ],'Data Coa Bank berhasil diubah');
+                'coaBank'=> $a
+            ],__('messages.coa_bank_kas_controller.berhasil_diubah'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Coa Bank gagal diubah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }
@@ -127,14 +127,13 @@ class CoaBankKasController extends Controller
             //code...
             CoaBankKas::where('id_coa_bank_kas',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data Coa Bank berhasil dihapus'
-            ],'Data Coa Bank berhasil dihapus');
+                'message' => __('messages.coa_bank_kas_controller.berhasil_dihapus'),
+            ], __('messages.coa_bank_kas_controller.berhasil_dihapus'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Coa Bank gagal dihapus');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }

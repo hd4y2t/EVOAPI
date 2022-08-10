@@ -4,10 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\V1\Master\CoaBankKasController;
 use App\Http\Controllers\V1\Master\COAController;
+use App\Http\Controllers\V1\Master\DetailJurnalController;
+use App\Http\Controllers\V1\Master\DetailJurnalTempController;
+use App\Http\Controllers\V1\Master\JurnalController;
+use App\Http\Controllers\V1\Master\JurnalTempController;
 use App\Http\Controllers\V1\Master\LokasiController;
 use App\Http\Controllers\V1\Master\KategoriCOAController;
 use App\Http\Controllers\V1\Master\MenuController;
 use App\Http\Controllers\V1\Master\RoleMenuController;
+use App\Models\V1\Master\DetailJurnal;
+use App\Models\V1\Master\DetailJurnalTemp;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +29,7 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
  Route::controller(UserController::class)->group(function () {
  
     Route::post('/login', 'login');
-                    // Route::post('/register', 'store');
+                    Route::post('/register', 'store');
             // Route::delete('/delete/{id}', 'delete_by_id');
             // Route::post('/{id}', 'show_by_id');
             // Route::put('/update/{id}', 'update_by_id');
@@ -51,6 +57,7 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
                       Route::post('/create', 'store');
                       Route::delete('/delete/{id}', 'delete_by_id');
                       Route::post('/{id}', 'show_by_id');
+                      Route::post('/{nama}', 'show_by_name');
                       Route::put('/update/{id}', 'update_by_id');
       
                   });
@@ -113,6 +120,52 @@ use App\Http\Controllers\V1\Master\RoleMenuController;
                   });
                });     
 
+                Route::controller(JurnalController::class)->group(function () {
+                    Route::prefix('jurnal')->group(function () {
+                                    
+                        Route::get('/get_last_id', 'get_last_id');
+                        Route::get('/', 'show_all');
+                        Route::post('/create', 'store');
+                        Route::delete('/delete/{id}', 'delete_by_id');
+                        Route::get('/{id}', 'show_by_id');
+                        Route::put('/update/{id}', 'update_by_id');
+
+                        Route::controller(DetailJurnalController::class)->group(function () {
+                            Route::prefix('detail')->group(function () {
+                                            
+                                Route::get('/', 'show_all');
+                                Route::post('/create', 'store');
+                                Route::delete('/delete/{id}', 'delete_by_id');
+                                Route::get('/{id}', 'show_by_id');
+                                Route::put('/update/{id}', 'update_by_id');
+                            });    
+                        });
+                        Route::controller(DetailJurnalTempController::class)->group(function () {
+                            Route::prefix('detailtemp')->group(function () {
+                                            
+                                Route::get('/show', 'show_all');
+                                Route::post('/move', 'move_data');
+                                Route::post('/create', 'store');
+                                Route::delete('/delete/{id}', 'delete_by_id');
+                                Route::get('/{id}', 'show_by_id');
+                                Route::put('/update/{id}', 'update_by_id');
+                            });    
+                        });
+                    });    
+                });
+                
+                Route::controller(JurnalTempController::class)->group(function () {
+                    Route::prefix('jurnal_temp')->group(function () {
+                                    
+                        Route::get('/', 'show_all');
+                        Route::post('/create', 'store');
+                        Route::delete('/delete/{id}', 'delete');
+                        Route::get('/{id}', 'show_by_id');
+                        Route::put('/update/{id}', 'update');
+        
+                    });  
+                 });     
+    
         Route::controller(UserController::class)->group(function () {
         
             Route::post('/logout', 'logout');

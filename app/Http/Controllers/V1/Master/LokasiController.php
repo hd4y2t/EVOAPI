@@ -18,22 +18,12 @@ class LokasiController extends Controller
      */
     public function show_all()
     {
-        //
+        //       
         $lokasi = Lokasi::all();
         return ResponseFormatter::success([
             'lokasi' => $lokasi,
-         ], 'Data lokasi berhasil diambil');
+         ], __('messages.lokasi_controller.berhasil_diambil'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function create()
-    // {
-    //     //
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -44,6 +34,7 @@ class LokasiController extends Controller
     public function store(Request $request)
     {
         //
+       
         try {
             //code...
             $request->validate([
@@ -62,13 +53,12 @@ class LokasiController extends Controller
             
             return ResponseFormatter::success([
                 'lokasi'=>$request->all()
-            ],'Data Lokasi berhasil ditambahkan');
+            ],__('messages.lokasi_controller.berhasil_ditambah'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Lokasi gagal ditambah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }
@@ -87,13 +77,12 @@ class LokasiController extends Controller
             $lokasi = Lokasi::where('id_lokasi',$id)->first();
             return ResponseFormatter::success([
                 'lokasi' => $lokasi,
-            ], 'Data lokasi berhasil diambil');
+            ], __('messages.lokasi_controller.berhasil_diambil'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data lokasi gagal diambil');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -122,13 +111,13 @@ class LokasiController extends Controller
 
             return ResponseFormatter::success([
                 'lokasi'=> $a
-            ],'Data Lokasi berhasil diubah');
+            ], __('messages.lokasi_controller.berhasil_diubah'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Lokasi gagal diubah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }
@@ -142,19 +131,17 @@ class LokasiController extends Controller
     public function delete_by_id($id)
     {
         //
-        try {
+         try {
             //code...
             Lokasi::where('id_lokasi',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data lokasi berhasil dihapus'
-            ],'Data Lokasi berhasil dihapus');
+                'message' => __('messages.lokasi_controller.berhasil_dihapus'),
+            ], __('messages.lokasi_controller.berhasil_dihapus'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Lokasi gagal dihapus');
-            
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 }

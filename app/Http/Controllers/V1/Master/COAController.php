@@ -28,7 +28,7 @@ class COAController extends Controller
         $coa = COA::with('kategori_coa')->get();
         return ResponseFormatter::success([
             'coa'=>$coa,
-        ], 'Data COA Berhasil didapat');
+        ], __('messages.coa_controller.berhasil_didapat'));
         
     }
 
@@ -86,14 +86,14 @@ class COAController extends Controller
                 'kategori_id'           => $request->kategori_id,
             ]);
             return ResponseFormatter::success([
-                'message' => 'Data COA berhasil ditambahkan',
+                'message' => __('messages.coa_controller.berhasil_ditambah'),
                 'coa' => $request->all(),
-            ], 'Data COA berhasil ditambahkan');
+            ], __('messages.coa_controller.berhasil_ditambah'));
         } catch (Exception $error) {
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data COA gagal ditambah');
+            ],__('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -106,17 +106,16 @@ class COAController extends Controller
     public function show_by_id($id)
     {
         //
-        try {
+       try {
             $coa = COA::where('id_coa', $id)->first();
             return ResponseFormatter::success([
-                'coa' => $coa,
-                'Data COA berhasil ditemukan'
-            ]);
+                'coa' => $coa
+            ],__('messages.coa_controller.berhasil_ditemukan'));
         } catch (Exception $error) {
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data COA gagal tidak ditemukan');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -143,9 +142,9 @@ class COAController extends Controller
     public function update_by_id(Request $request, $id)
     {
         //
-        try {
+         try {
             $request->validate([
-                 'kode_account'          => 'string',
+                 'kode_account'          => 'string|unique:coa',
                 'nama'                  => 'string|max:100',
                 'posisi'                => '',
                 'letak'                 => '',
@@ -165,14 +164,13 @@ class COAController extends Controller
             $a = COA::where('id_coa', $id)->first();
 
             return ResponseFormatter::success([
-                'coa' => $a,
-                'Data COA berhasil diedit'
-            ]);
+                'coa' => $a
+            ],__('messages.coa_controller.berhasil_diedit'));
         } catch (Exception $error) {
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data COA gagal diedit');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -188,11 +186,11 @@ class COAController extends Controller
         try {
             COA::where('id_coa', $id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data COA berhasil dihapus'
+                'message' => __('messages.coa_controller.berhasil_dihapus')
             ]);
         } catch (Exception $error) {
             return ResponseFormatter::error([
-                'message' => 'Data COA tidak ditemukan',
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
             ]);
         }

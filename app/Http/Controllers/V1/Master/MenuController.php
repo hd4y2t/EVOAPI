@@ -16,7 +16,7 @@ class MenuController extends Controller
         $menu = Menu::all();
         return ResponseFormatter::success([
             'menu' => $menu,
-         ], 'Data menu berhasil diambil');
+         ], __('messages.menu_controller.berhasil_diambil'));
     }
 
     /**
@@ -50,15 +50,14 @@ class MenuController extends Controller
                 'route' => $request->route,
             ]);
             
-            return ResponseFormatter::success([
+             return ResponseFormatter::success([
                 'menu'=>$request->all()
-            ],'Data menu berhasil ditambahkan');
+            ],__('messages.menu_controller.berhasil_ditambah'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'menu gagal ditambah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }
@@ -72,18 +71,17 @@ class MenuController extends Controller
     public function show_by_id($id)
     {
         //
-        try {
+         try {
             //code...
             $menu = Menu::where('id_menu',$id)->first();
             return ResponseFormatter::success([
                 'menu' => $menu,
-            ], 'Data menu berhasil diambil');
+            ], __('messages.menu_controller.berhasil_diambil'),);
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data menu gagal diambil');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -109,15 +107,13 @@ class MenuController extends Controller
             $a = menu::where('id_menu', $id)->first();
 
             return ResponseFormatter::success([
-                'menu'=> $a
-            ],'Data menu berhasil diubah');
+            'menu'=> $a
+            ],__('messages.menu_controller.berhasil_diubah'),);
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data menu gagal diubah');
-            
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -134,14 +130,13 @@ class MenuController extends Controller
             //code...
             Menu::where('id_menu',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data menu berhasil dihapus'
-            ],'Data menu berhasil dihapus');
+                'message' => __('messages.menu_controller.berhasil_dihapus'),
+            ], __('messages.menu_controller.berhasil_dihapus'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data menu gagal dihapus');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }

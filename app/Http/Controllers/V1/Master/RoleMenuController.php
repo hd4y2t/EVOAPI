@@ -18,7 +18,7 @@ class RoleMenuController extends Controller
         $role_menu = RoleMenu::with('user','menu')->get();
         return ResponseFormatter::success([
             'role_menu' => $role_menu,
-         ], 'Data Role Menu berhasil diambil');
+        ], __('messages.role_controller.berhasil_diambil'));
     }
 
     /**
@@ -52,16 +52,14 @@ class RoleMenuController extends Controller
                 'menu_id' => $request->menu_id,
             ]);
             
-            return ResponseFormatter::success([
+           return ResponseFormatter::success([
                 'role_menu'=>$request->all()
-            ],'Data Role Menu berhasil ditambahkan');
+            ], __('messages.role_controller.berhasil_ditambah'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Role Menu gagal ditambah');
-            
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -79,25 +77,13 @@ class RoleMenuController extends Controller
             $role_menu = RoleMenu::where('id_role_menu',$id)->first();
             return ResponseFormatter::success([
                 'role_menu' => $role_menu,
-            ], 'Data Role Menu berhasil diambil');
+            ], __('messages.role_controller.berhasil_diambil'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Role Menu gagal diambil');
+            ], __('messages.error_json_umum.error_catch_meta'));
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -113,21 +99,19 @@ class RoleMenuController extends Controller
         try {
             //code...
             $request->validate([
-                'menu_id' => 'max:200',
-                'user_id' => 'max:100'
+                'user_id' => 'max:100',
+                'menu_id' => 'max:200'
             ]);
 
-           $a= RoleMenu::where('id_role_menu',$id)->update($request->all());
-
+           $a = RoleMenu::where('id_role_menu',$id)->update($request->all());
             return ResponseFormatter::success([
-                'role_menu'=> $request->all()
-            ],'Data Role Menu berhasil diubah');
+                'role_menu'=> $a
+            ], __('messages.role_controller.berhasil_diubah'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Role Menu gagal diubah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }
@@ -145,14 +129,13 @@ class RoleMenuController extends Controller
             //code...
             RoleMenu::where('id_role_menu',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data role_menu berhasil dihapus'
-            ],'Data role_menu berhasil dihapus');
+                'message' => __('messages.role_controller.berhasil_dihapus'),
+            ], __('messages.role_controller.berhasil_dihapus'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data role_menu gagal dihapus');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
             
         }
     }

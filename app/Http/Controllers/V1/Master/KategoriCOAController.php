@@ -11,25 +11,13 @@ use App\Models\V1\Master\KategoriCOA;
 
 class KategoriCOAController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-    //  public function __construct()
-    // {
-    //     $this->middleware('auth:sanctum');
-    // }
-
-     public function show_all()
+   
+    public function show_all()
     {
-        //
         $kategori_coa = KategoriCOA::all();
         return ResponseFormatter::success([
             'kategori_coa' => $kategori_coa,
-         ], 'Data kategori COA berhasil diambil');
+         ], __('messages.kategori_coa_controller.berhasil_diambil'));
     }
 
     /**
@@ -51,7 +39,7 @@ class KategoriCOAController extends Controller
     public function store(Request $request)
     {
         //
-        try {
+         try {
          $request->validate([
              'nama' => 'required|min:3|max:100',
          ]);
@@ -59,16 +47,16 @@ class KategoriCOAController extends Controller
                     'nama' => $request->nama,
                 ]);
             return ResponseFormatter::success([
-                'message' => 'Data kategori COA berhasil ditambahkan',
+                'message' => __('messages.kategori_coa_controller.berhasil_ditambah'),
                 'kategori_coa' => $request->all(),
-            ], 'Data kategori COA berhasil ditambahkan');
+            ], __('messages.kategori_coa_controller.berhasil_ditambah'));
 
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data Kategori COA gagal ditambah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -81,31 +69,19 @@ class KategoriCOAController extends Controller
     public function show_by_id($id)
     {
         //
-        try {
+         try {
             //code...
-            $kategori_coa = KategoriCOA::findOrFail($id);
+            $kategori_coa = KategoriCOA::where('id_kategori_coa',$id)->first();
             return ResponseFormatter::success([
                 'kategori_coa' => $kategori_coa,
-             ], 'Data kategori COA berhasil diambil');
+             ], __('messages.kategori_coa_controller.berhasil_diambil'));
         } catch (Exception $error) {
-            //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data kategori COA gagal diambil');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function edit($id)
-    // {
-    //     //
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -117,7 +93,7 @@ class KategoriCOAController extends Controller
     public function update_by_id(Request $request, $id)
     {
         //
-        try {
+         try {
             //code...
             $request->validate([
                 'nama',
@@ -126,13 +102,13 @@ class KategoriCOAController extends Controller
             $a = KategoriCOA::where('id_kategori_coa',$id)->update($request->all());
             return ResponseFormatter::success([
                 'kategori_coa' => $a,
-            ], 'Data kategori COA berhasil diubah');
+            ], __('messages.kategori_coa_controller.berhasil_diubah'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data kategori COA gagal diubah');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
@@ -145,18 +121,18 @@ class KategoriCOAController extends Controller
     public function delete_by_id($id)
     {
         //
-        try {
+          try {
             //code...
             $kategori_coa = KategoriCOA::where('id_kategori_coa',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data kategori COA berhasil dihapus',
-            ], 'Data kategori COA berhasil dihapus');
+                'message' => __('messages.kategori_coa_controller.berhasil_dihapus'),
+            ], __('messages.kategori_coa_controller.berhasil_dihapus'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data kategori COA gagal dihapus');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 }

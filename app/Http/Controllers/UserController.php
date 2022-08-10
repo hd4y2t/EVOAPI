@@ -6,7 +6,6 @@ use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use Hamcrest\Core\IsSame;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -17,7 +16,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
      
     public function login(Request $request){
         try{
@@ -29,28 +27,26 @@ class UserController extends Controller
             if($user){
                 if(Hash::check($request->password, $user->password)){
                     $tokenResult=$user->createToken('authToken')->plainTextToken;
-                    // $user->remember_token = $tokenResult;
-                    // $user->update();
                     return ResponseFormatter::success([
                        'access_token'=> $tokenResult,
                        'token_type'=> 'Bearer',
                        'user'=>$user
-                    ], 'Selamat Datang '.$user['name']);
+                    ], __('messages.user_controller.berhasil_login').$user['name']);
                 }else{
                     return ResponseFormatter::error([
-                        'message' => 'Password Salah',
-                    ], 'User gagal Login',500);
+                        'message' => __('messages.user_controller.password_salah'),
+                    ], __('messages.user_controller.password_salah'),500);
                 }
             }else{
-                return ResponseFormatter::error([
-                    'message' => 'Email tidak ditemukan',
-                ], 'User gagal Login',500);
+               return ResponseFormatter::error([
+                    'message' => __('messages.user_controller.email_tidak_ada'),
+                ], __('messages.user_controller.email_tidak_ada'),500);
             }
            }catch(Exception $error){
-               return ResponseFormatter::error([
-                   'message' => 'Something went wrong!',
+              return ResponseFormatter::error([
+                   'message' => __('messages.user_controller.gagal_login'),
                    'error' => $error,
-                ], 'User gagal Login',500);
+                ], __('messages.user_controller.gagal_login'),500);
            }
     }
     
@@ -59,20 +55,10 @@ class UserController extends Controller
         //
          //
         $user = User::all();
-        return ResponseFormatter::success([
+       return ResponseFormatter::success([
             'user' => $user,
-         ], 'Data user berhasil diambil');
+         ], __('messages.user_controller.berhasil_ambil'));
         
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -96,7 +82,7 @@ class UserController extends Controller
                'password' => Hash::make($request->password),
             ]);
    
-           $user= User::where('email', $request->email)->first();
+            $user= User::where('email', $request->email)->first();
    
             $tokenResult=$user->createToken('authToken')->plainTextToken;
    
@@ -104,35 +90,13 @@ class UserController extends Controller
                'access_token'=> $tokenResult,
                'token_type'=> 'Bearer',
                'user'=>$user
-            ], 'User Terdaftar');
+            ],  __('messages.user_controller.berhasil_daftar'));
            }catch(Exception $error){
-               return ResponseFormatter::error([
-                   'message' => 'Something went wrong!',
+              return ResponseFormatter::error([
+                   'message' => __('messages.error_json_umum.error_catch_data'),
                    'error' => $error,
-                ], 'User gagal daftar',500);
+                ], __('messages.error_json_umum.error_catch_meta'),500);
            }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show_by_id($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -151,16 +115,15 @@ class UserController extends Controller
                'email' => [ 'string','max:255','email','unique:users'],
             ]);   
          
-            User::where('id', $id)->update($request->all());
-            $user= User::where('email', $request->email)->first();
+            $user = User::where('id', $id)->update($request->all());
             return ResponseFormatter::success([
-              'user'=>$user
-            ], 'User Terdaftar');
+               'user'=>$user
+            ], __('messages.user_controller.berhasil_daftar'));
            }catch(Exception $error){
                return ResponseFormatter::error([
-                   'message' => 'Something went wrong!',
+                   'message' => __('messages.error_json_umum.error_catch_data'),
                    'error' => $error,
-                ], 'User gagal daftar',500);
+                ], __('messages.error_json_umum.error_catch_meta'),500);
            }
     }
 
@@ -197,17 +160,18 @@ class UserController extends Controller
     public function delete_by_id($id)
     {
         //
-        try {
+         try {
+            //code...
             User::where('id',$id)->delete();
             return ResponseFormatter::success([
-                'message' => 'Data user berhasil dihapus'
-            ],'Data User berhasil dihapus');
+                'message' => __('messages.user_controller.berhasil_hapus'),
+            ], __('messages.user_controller.berhasil_hapus'));
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
-                'message' => $error->getMessage(),
+                'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
-            ], 'Data User gagal dihapus');
+            ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
 
