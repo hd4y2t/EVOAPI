@@ -15,6 +15,6 @@ class DetailJurnal extends Model
         'coa_id',
         'keterangan',
         'debit',
-        'kredit',
+        'kredit'
     ];
 }

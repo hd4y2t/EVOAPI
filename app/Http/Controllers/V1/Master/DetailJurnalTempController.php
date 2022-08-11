@@ -30,10 +30,15 @@ class DetailJurnalTempController extends Controller
                 'kredit'       => 'required',
             ]);
             
-            $jurnal = Jurnal::latest()->first();
-            $jurnal_id = $jurnal->id_jurnal +1;
-     
-            $user= Session::get('user.id');
+            $jurnal = Jurnal::orderBy('id_jurnal','desc')->first();
+            if($jurnal == null){
+                $jurnal_id = 1;
+            }else{
+                $jurnal_id = $jurnal->id_jurnal + 1;
+            }
+            $user =1;
+            // $user= Session::get('user.id');
+            // dd($jurnal_id);
             $detail=  DetailJurnalTemp::create([
                 'jurnal_id'    => $jurnal_id,
                 'coa_id'       => $request->coa_id,
@@ -56,44 +61,45 @@ class DetailJurnalTempController extends Controller
 
     public function move_data(Request $request)
     {
-            // try {
+            try {
                 //code...                
-                // $user = Session::get('user.id');
-                // $jam = date('H:i:s');
-                //   Jurnal::create([ 
-                //         'kode_voucher'  => $request->kode_voucher,
-                //         'tanggal'       => $request->tanggal,
-                //         'jam'           => $jam,
-                //         'user_id'       => $request->user_id,
-                //         'jenis'         => $request->jenis,
-                //         'note'         => $request->note,
-                //     ]);
-                $jurnal = Jurnal::latest()->first();
+                $jam = date('H:i:s');
+                 $jurnal= Jurnal::create([ 
+                        'kode_voucher'  => $request->kode_voucher,
+                        'tanggal'       => $request->tanggal,
+                        'jam'           => $jam,
+                        'user_id'       => $request->user_id,
+                        'jenis'         => $request->jenis,
+                        'note'         => $request->note,
+                    ]);
                 $jurnal_id = $jurnal->id_jurnal;
              
                 $data = DetailJurnalTemp::where('jurnal_id',$jurnal_id)->orderBy('id_detail_jurnal', 'asc')
-              ->each(function ($oldPost) {
+                ->each(function ($oldPost) {
+                    
+                $jurnal = Jurnal::orderBy('id_jurnal','desc')->first();
+                $jurnal_id = $jurnal->id_jurnal;
                 $newPost = $oldPost->replicate();
                 $newPost->setTable('detail_jurnal');
                 $newPost->save();
+                $oldPost->where('jurnal_id',$jurnal_id)->delete();
+                
+                
                 
                 });
-                dd($data);
-              
         
-        
-                // return ResponseFormatter::success([
-                //     'detail_jurnal'=> $data
-                // ],__('messages.detail_jurnal_controller.berhasil_ditambah'));
+                return ResponseFormatter::success([
+                    'detail_jurnal'=> $data
+                ],__('messages.detail_jurnal_controller.berhasil_ditambah'));
                 
-            // } catch (Exception $error) {
-            //     //throw $th;
+            } catch (Exception $error) {
+                //throw $th;
 
-            //     return ResponseFormatter::error([
-            //         'error'=> $error
-            //     ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
+                return ResponseFormatter::error([
+                    'error'=> $error
+                ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
                 
-            // }
+            }
     }
 
 

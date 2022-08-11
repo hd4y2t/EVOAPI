@@ -15,6 +15,6 @@ class DetailJurnalTemp extends Model
         'coa_id',
         'keterangan',
         'debit',
-        'kredit',
+        'kredit'
     ];
 }
