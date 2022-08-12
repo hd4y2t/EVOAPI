@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Master\TestingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\V1\Master\CoaBankKasController;
@@ -169,5 +170,9 @@ use App\Models\V1\Master\DetailJurnalTemp;
         Route::controller(UserController::class)->group(function () {
         
             Route::post('/logout', 'logout');
+        });
+        Route::controller(TestingController::class)->group(function () {
+        
+            Route::get('/test', 'cobainsert');
         });
     });  

@@ -26,8 +26,8 @@ return new class extends Migration
             $table->char('pakai_budget')->length(1);
             $table->integer('lama_budget_harian');
             $table->integer('lama_budget_bulanan');
-            $table->float('budget_harian');
-            $table->float('budget_bulanan');
+            $table->float('budget_harian',15,0);
+            $table->float('budget_bulanan',15,0);
             $table->char('flag_khusus')->length(1);
             $table->foreignId('kategori_id');
             $table->timestamps();

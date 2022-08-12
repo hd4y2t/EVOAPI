@@ -16,7 +16,7 @@ class DetailJurnalTempController extends Controller
     {
         $djurnal = DetailJurnalTemp::all();
         return ResponseFormatter::success([
-            'detail_jurnal' => $djurnal,
+            'detail_jurnal_temp' => $djurnal,
          ], __('messages.detail_jurnal_controller.berhasil_diambil'));
     }
 
@@ -42,7 +42,7 @@ class DetailJurnalTempController extends Controller
             $detail=  DetailJurnalTemp::create([
                 'jurnal_id'    => $jurnal_id,
                 'coa_id'       => $request->coa_id,
-                'user_id'      => $user,
+                'user_id'      => $request->user_id,
                 'keterangan'   => $request->keterangan,
                 'debit'        => $request->debit,
                 'kredit'       => $request->kredit,
@@ -63,14 +63,14 @@ class DetailJurnalTempController extends Controller
     {
             try {
                 //code...                
-                $jam = date('H:i:s');
+                $jam = date('H:i');
                  $jurnal= Jurnal::create([ 
                         'kode_voucher'  => $request->kode_voucher,
                         'tanggal'       => $request->tanggal,
                         'jam'           => $jam,
                         'user_id'       => $request->user_id,
                         'jenis'         => $request->jenis,
-                        'note'         => $request->note,
+                        'note'          => $request->note,
                     ]);
                 $jurnal_id = $jurnal->id_jurnal;
              
