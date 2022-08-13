@@ -17,4 +17,7 @@ class DetailJurnalTemp extends Model
         'debit',
         'kredit'
     ];
+      public function coa(){
+        return $this->belongsTo(COA::class,'coa_id','id_coa');
+    }
 }
