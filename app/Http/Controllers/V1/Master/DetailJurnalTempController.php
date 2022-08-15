@@ -115,7 +115,6 @@ class DetailJurnalTempController extends Controller
             }
     }
 
-
     public function show_by_id($id)
     {
         try {
