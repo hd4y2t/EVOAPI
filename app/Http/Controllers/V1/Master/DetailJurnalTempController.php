@@ -81,7 +81,7 @@ class DetailJurnalTempController extends Controller
             try {
                 //code...                
                 $jam = date('H:i');
-                 Jurnal::create([ 
+                $jurnal= Jurnal::create([ 
                         'kode_voucher'  => $request->kode_voucher,
                         'tanggal'       => $request->tanggal,
                         'jam'           => $jam,
@@ -89,13 +89,13 @@ class DetailJurnalTempController extends Controller
                         'jenis'         => $request->jenis,
                         'note'          => $request->note,
                     ]);
-                // $jurnal_id = $jurnal->id_jurnal;
-                $jurnal = Jurnal::orderBy('id_jurnal','desc')->first();
+                $jurnal_id = $jurnal->id_jurnal;
+                // $jurnal = Jurnal::orderBy('id_jurnal','desc')->first();
                 $jurnal_id = $jurnal->id_jurnal;
                 $data = DetailJurnalTemp::where('jurnal_id',$jurnal_id)->orderBy('id_detail_jurnal', 'asc')
-                ->each(function ($oldPost) {
-                    
+                ->each(function ($oldPost,$jurnal_id) {
                 $newPost = $oldPost->replicate();
+                // $newPost->set('jurnal_id') = $jurnal_id;
                 $newPost->setTable('detail_jurnal');
                 $newPost->save();
                 });

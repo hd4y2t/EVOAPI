@@ -17,6 +17,7 @@ return new class extends Migration
                 $table->bigIncrements('id_detail_jurnal');
                 $table->foreignId('jurnal_id');
                 $table->foreignId('coa_id');
+                $table->foreignId('user_id');
                 $table->string('keterangan')->length(80);
                 $table->decimal('debit', 15, 0);
                 $table->decimal('kredit', 15, 0);

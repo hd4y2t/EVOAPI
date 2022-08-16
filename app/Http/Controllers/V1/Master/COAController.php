@@ -146,18 +146,6 @@ class COAController extends Controller
             $request->validate([
                  'kode_account'          => 'string|unique:coa',
                 'nama'                  => 'string|max:100',
-                'posisi'                => '',
-                'letak'                 => '',
-                'jns'                   => '',
-                'lokasi_id'             => '',
-                'aktif'                 => '',
-                'pakai_budget'          => '',
-                'lama_budget_harian'    => '',
-                'lama_budget_bulanan'   => '',
-                'budget_harian'         => '',
-                'budget_bulanan'        => '',
-                'flag_khusus'           => '',
-                'kategori_id'           => '',
             ]);
 
             COA::where('id_coa',$id)->update($request->all());

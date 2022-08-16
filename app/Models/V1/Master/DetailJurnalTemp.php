@@ -13,6 +13,7 @@ class DetailJurnalTemp extends Model
     protected $fillable = [
         'jurnal_id',
         'coa_id',
+        'user_id',
         'keterangan',
         'debit',
         'kredit'

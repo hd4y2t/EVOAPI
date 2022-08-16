@@ -25,6 +25,7 @@ class DetailJurnalController extends Controller
             $request->validate([
                 'jurnal_id' => 'required',
                 'coa_id'      => 'required',
+                'user_id'      => 'required',
                 'jenis'        => 'required',
                 'note'         => 'required',
             ]);
