@@ -117,7 +117,8 @@ use App\Models\V1\Master\DetailJurnalTemp;
                       Route::delete('/delete/{id}', 'delete_by_id');
                       Route::post('/{id}', 'show_by_id');
                       Route::put('/update/{id}', 'update_by_id');
-      
+                      Route::get('/getJenis/{id}', 'getBankKas');
+                            
                   });
                });     
 

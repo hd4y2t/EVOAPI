@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Master;
 use Exception;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\V1\Master\CoaBankKas;
 
@@ -55,6 +56,14 @@ class CoaBankKasController extends Controller
         }
     }
 
+    public function getBankKas($jenis)
+    {
+        $coabank = DB::table('coa_bank_kas')->join('coa','coa_id','=','id_coa')->select('inisial','coa_id','nama')->where('jenis',$jenis)->get('id_coa','coa_id','coa_name');
+         return $coabank;
+            // 'inisial' => $coabank->inisial,
+            // 'nama'=> $coabank->nama,
+       
+    }
     /**
      * Display the specified resource.
      *

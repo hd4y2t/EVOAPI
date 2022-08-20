@@ -87,12 +87,14 @@ class DetailJurnalTempController extends Controller
                         'note'          => $request->note,
                         'coa_id'          => $coa_id->coa_id,
                     ];
-                $coba = DB::select('exec simpan_jurnal ?,?,?,?,?,?,?,?',array(  $jurnal['jenis'] ,$request->inisial,$jurnal['tanggal'] ,$jurnal['user_id'],$jurnal['note'],$jurnal['coa_id'],null,null));
+                    $coba = DB::select('exec simpan_jurnal ?,?,?,?,?,?,?,?',array(  $jurnal['jenis'] ,$request->inisial,$jurnal['tanggal'] ,$jurnal['user_id'],$jurnal['note'],$jurnal['coa_id'],null,null));
+                
+                    // dd($coba);
                 
                 if ($coba) {
-                    return ResponseFormatter::success(
-                        $coba,
-                        'Data berhasil diambil'
+                    return ResponseFormatter::success([
+                       'jurnal'=>$coba
+                    ],'Data berhasil diambil'
                     );
                 } else {
                     return ResponseFormatter::error(
@@ -115,10 +117,21 @@ class DetailJurnalTempController extends Controller
     {
         try {
             //code...
-            $jurnal = DetailJurnalTemp::where('id_detail_jurnal',$id)->first();
-            return ResponseFormatter::success([
-                'jurnal' => $jurnal,
-            ], __('messages.detail_jurnal_controller.berhasil_diambil'));
+            $coba = DB::select('exec pindah_jurnal_ke_temp ?,?,?',array($id,null,null));
+                
+                    // dd($coba);
+                if ($coba) {
+                    return ResponseFormatter::success([
+                       'jurnal'=>$coba
+                    ],'Data berhasil diambil'
+                    );
+                } else {
+                    return ResponseFormatter::error(
+                        null,
+                        'Data tidak ada',
+                        404
+                    );
+                }
         } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => __('messages.error_json_umum.error_catch_data'),
@@ -140,6 +153,15 @@ class DetailJurnalTempController extends Controller
                 'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
             ], __('messages.error_json_umum.error_catch_meta'),500);
+        }
+    }
+
+    public function update_by_jurnal($id)
+    {
+        try {
+            
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 
