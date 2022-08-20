@@ -16,6 +16,7 @@ class DetailJurnal extends Model
         'user_id',
         'keterangan',
         'debit',
-        'kredit'
+        'kredit',
+        'flag_dari_atas'
     ];
 }

@@ -16,7 +16,8 @@ class DetailJurnalTemp extends Model
         'user_id',
         'keterangan',
         'debit',
-        'kredit'
+        'kredit',
+        'flag_dari_atas'
     ];
       public function coa(){
         return $this->belongsTo(COA::class,'coa_id','id_coa');
