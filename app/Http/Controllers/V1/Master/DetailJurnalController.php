@@ -4,7 +4,9 @@ namespace App\Http\Controllers\V1\Master;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Models\V1\Master\Jurnal;
 use App\Helpers\ResponseFormatter;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\V1\Master\DetailJurnal;
 use Illuminate\Support\Facades\Session;
@@ -66,13 +68,24 @@ class DetailJurnalController extends Controller
             ], __('messages.error_json_umum.error_catch_meta'),500);
         }
     }
+
     public function show_by_jurnal($jurnal)
     {
         try {
             //code...
-            $jurnal = DetailJurnal::where('jurnal_id',$jurnal)->get();
+            $jurnal = Jurnal::where('id_jurnal',$jurnal)->first();
+            
+            $detail = DetailJurnal::with('coa')->where('jurnal_id',$jurnal->id_jurnal)->where('flag_dari_atas','T')->get();
+
+$debit = $detail->sum('debit');
+        $kredit = $detail->sum('kredit');
+       
+
             return ResponseFormatter::success([
                 'jurnal' => $jurnal,
+                'detail' => $detail,
+                'debit' => $debit,
+                'kredit' => $kredit,
             ], __('messages.detail_jurnal_controller.berhasil_diambil'));
         } catch (Exception $error) {
             return ResponseFormatter::error([

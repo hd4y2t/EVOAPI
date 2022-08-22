@@ -144,7 +144,7 @@ class DetailJurnalTempController extends Controller
     {
         try {
             //code...
-            $jurnal = DetailJurnalTemp::where('id_detail_jurnal',$jurnal)->get();
+            $jurnal = DetailJurnalTemp::with('jurnal')->where('id_detail_jurnal',$jurnal)->get();
             return ResponseFormatter::success([
                 'jurnal' => $jurnal,
             ], __('messages.detail_jurnal_controller.berhasil_diambil'));
