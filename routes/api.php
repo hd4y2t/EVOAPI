@@ -37,6 +37,7 @@ use App\Models\V1\Master\DetailJurnalTemp;
  });
    Route::group(['middleware' => ['auth:sanctum','verified']],function () 
    {
+    
                Route::controller(UserController::class)->group(function () {
                     Route::prefix('user')->group(function () {                 
 
@@ -106,6 +107,8 @@ use App\Models\V1\Master\DetailJurnalTemp;
                       Route::delete('/delete/{id}', 'delete_by_id');
                       Route::post('/{id}', 'show_by_id');
                       Route::put('/update/{id}', 'update_by_id');
+                      Route::get('/menu/{id_user}', 'getMenu');
+                      Route::get('/submenu/{id_menu}', 'getSubmenu');
       
                   });
                });     
