@@ -12,7 +12,6 @@ class CoaBankKas extends Model
 
     protected $fillable = [
         'coa_id',
-        'jenis',
         'inisial',
     ];
 

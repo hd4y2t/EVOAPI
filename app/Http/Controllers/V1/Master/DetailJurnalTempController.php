@@ -76,7 +76,7 @@ class DetailJurnalTempController extends Controller
                 $jam = date('H:i');
                 $user =auth()->user()->id;
                 $coa_id = DB::table('coa_bank_kas')
-                    ->where('inisial', $request->inisial)->first();
+                    ->where('id_coa_bank_kas', $request->id_coa_bank_kas)->first();
                    
                 // dd($coa_id->coa_id);
                     $jurnal =[ 
@@ -87,7 +87,8 @@ class DetailJurnalTempController extends Controller
                         'note'          => $request->note,
                         'coa_id'          => $coa_id->coa_id,
                     ];
-                    $coba = DB::select('exec simpan_jurnal ?,?,?,?,?,?,?,?',array(  $jurnal['jenis'] ,$request->inisial,$jurnal['tanggal'] ,$jurnal['user_id'],$jurnal['note'],$jurnal['coa_id'],null,null));
+                    // dd($jurnal);
+                    $coba = DB::select('exec simpan_jurnal ?,?,?,?,?,?,?',array($jurnal['jenis'],$jurnal['tanggal'] ,$jurnal['user_id'],$jurnal['note'],$jurnal['coa_id'],null,null));
                 
                     // dd($coba);
                 

@@ -33,13 +33,11 @@ class CoaBankKasController extends Controller
             //code...
             $request->validate([
                 'coa_id' => 'required',
-                'jenis' => 'required',
                 'inisial' => 'required',
             ]);
 
             CoaBankKas::create([
                 'coa_id' => $request->coa_id,
-                'jenis' => $request->jenis,
                 'inisial' => $request->inisial,
             ]);
             
@@ -56,14 +54,6 @@ class CoaBankKasController extends Controller
         }
     }
 
-    public function getBankKas($jenis)
-    {
-        $coabank = DB::table('coa_bank_kas')->join('coa','coa_id','=','id_coa')->select('inisial','coa_id','nama')->where('jenis',$jenis)->get('id_coa','coa_id','coa_name');
-         return $coabank;
-            // 'inisial' => $coabank->inisial,
-            // 'nama'=> $coabank->nama,
-       
-    }
     /**
      * Display the specified resource.
      *
@@ -103,7 +93,6 @@ class CoaBankKasController extends Controller
             //code...
             $request->validate([
                 'coa_id' => 'required',
-                'jenis' => 'required',
                 'inisial' => 'required',
             ]);
 

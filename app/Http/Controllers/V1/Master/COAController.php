@@ -120,19 +120,6 @@ class COAController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    // public function edit($id)
-    // {
-    //     //
-      
-    // }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -143,11 +130,6 @@ class COAController extends Controller
     {
         //
          try {
-            $request->validate([
-                 'kode_account'          => 'string|unique:coa',
-                'nama'                  => 'string|max:100',
-            ]);
-
             COA::where('id_coa',$id)->update($request->all());
             $a = COA::where('id_coa', $id)->first();
 
