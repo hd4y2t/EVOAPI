@@ -5,18 +5,16 @@ namespace App\Models\V1\Master;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JurnalTemp extends Model
+class JurnalTempEdit extends Model
 {
     use HasFactory;
-    protected $table = 'jurnal_temp';
+    protected $table = 'jurnal_temp_edit';
 
     protected $fillable = [
         'kode_voucher',
         'tanggal',
-        'jam',
-        'user_id',
         'jenis',
         'note',
-        'tanggal_input'
+        'id_coa_atas'
     ];
 }

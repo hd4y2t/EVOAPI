@@ -132,7 +132,7 @@ use App\Models\V1\Master\DetailJurnalTemp;
                         Route::get('/', 'show_all');
                         Route::post('/create', 'store');
                         Route::delete('/delete/{id}', 'delete_by_id');
-                        Route::put('/update/{id}', 'update_by_id');
+                        Route::get('/update/{id}', 'update_by_jurnal');
 
                         Route::controller(DetailJurnalController::class)->group(function () {
                             Route::prefix('detail')->group(function () {

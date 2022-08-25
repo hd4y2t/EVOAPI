@@ -6,9 +6,15 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\V1\Master\Jurnal;
 use App\Helpers\ResponseFormatter;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\V1\Master\JurnalTemp;
 use App\Models\V1\Master\DetailJurnal;
 use Illuminate\Database\Query\Expression;
+use App\Http\Controllers\V1\Master\JurnalTempEditController;
+use App\Models\V1\Master\CoaBankKas;
+use App\Models\V1\Master\DetailJurnalTempEdit;
+use App\Models\V1\Master\JurnalTempEdit;
 
 class JurnalController extends Controller
 {
@@ -37,31 +43,65 @@ class JurnalController extends Controller
         }
     }
 
-    public function update_by_id(Request $request, $id)
+    public function update_by_jurnal($id)
+    {
+       try {
+                  
+            $coba = DB::select('exec pindah_jurnal_ke_temp ?,?,?',array($id,null,null));
+            // dd($coba);
+            $jurnal = JurnalTempEdit::where('id_jurnal',$id)->first();
+            $bank_kas = CoaBankKas::with('coa')->where('coa_id',$jurnal['id_coa_atas'])->first();
+            $detail = DetailJurnalTempEdit::with('coa')->where('jurnal_id',$id)->get();
+            $debit = $detail->sum('debit');
+            $kredit = $detail->sum('kredit');
+            if ($coba) {
+                return ResponseFormatter::success([
+                    'status'=>$coba,
+                    'jurnal'=>$jurnal,
+                    'bank_kas'=>$bank_kas,
+                    'detail'=>$detail,
+                    'debit'=>$debit,
+                    'kredit'=>$kredit,
+                ],'Data berhasil diambil'
+                );
+            } else {
+                return ResponseFormatter::error(
+                    null,
+                    'Data tidak ada',
+                    404
+                );
+            }
+        } catch (Exception $error) {
+
+            return ResponseFormatter::error([
+                'error'=> $error
+            ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
+            
+        }
+    }
+
+     public function do_update_by_jurnal($id)
     {
         try {
             //code...
-            $request->validate([
-                'kode_voucher' => 'required|max:20',
-                'tanggal'     => 'required|max:150',
-                'jam'         => 'required',
-                'user_id'     => 'required',
-                'jenis'       => 'required',
-                'note'        => 'required',
-            ]);
+            $jurnal = Jurnal::where('id_jurnal',$id)->first();
+            
+            $detail = DetailJurnal::with('coa')->where('jurnal_id',$jurnal->id_jurnal)->where('flag_dari_atas','T')->get();
 
-            Jurnal::where('id_jurnal',$id)->update($request->all());
-            $a = Jurnal::where('id_jurnal', $id)->first();
-
+            $debit = $detail->sum('debit');
+            $kredit = $detail->sum('kredit');
+                
             return ResponseFormatter::success([
-                'jurnal'=> $a
-            ],__('messages.jurnal_controller.berhasil_diubah'));
+                'jurnal' => $jurnal,
+                'detail' => $detail,
+                'debit' => $debit,
+                'kredit' => $kredit,
+            ], __('messages.detail_jurnal_controller.berhasil_diambil'));
         } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
             ], __('messages.error_json_umum.error_catch_meta'),500);
-            
         }
     }
 

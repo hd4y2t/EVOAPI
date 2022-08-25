@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jurnal_temp', function (Blueprint $table) {
-                $table->bigIncrements('id_jurnal_temp');
+        Schema::create('jurnal_temp_edit', function (Blueprint $table) {
+                $table->integer('id_jurnal');
                 $table->string('kode_voucher')->length(20)->unique();
                 $table->date('tanggal');
-                $table->time('jam');
-                $table->foreignId('user_id');
                 $table->string('jenis')->length(2);
                 $table->string('note')->length(80);
-                $table->datetime('tanggal_input');
+                $table->foreignId('id_coa_atas');
                 $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jurnal_temp');
+        Schema::dropIfExists('jurnal_temp_edit');
     }
 };

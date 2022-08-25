@@ -6,14 +6,14 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\V1\Master\JurnalTemp;
+use App\Models\V1\Master\JurnalTempEdit;
 use Illuminate\Database\Query\Expression;
 
-class JurnalTempController extends Controller
+class JurnalTempEditEditController extends Controller
 {
     public function show_all()
     {
-        $jurnal_temp = JurnalTemp::all();
+        $jurnal_temp = JurnalTempEdit::all();
         return ResponseFormatter::success([
             'jurnal_temp' => $jurnal_temp,
          ], __('messages.jurnal_temp_controller.berhasil_diambil'));
@@ -21,44 +21,14 @@ class JurnalTempController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'kode_voucher' => 'required|max:20',
-                'tanggal'      => 'required|max:150',
-                'jam'          => 'required',
-                'user_id'      => 'required',
-                'jenis'        => 'required',
-                'note'         => 'required',
-                'tanggal_input'=> 'required',
-            ]);
-
-            JurnalTemp::create([
-                'kode_voucher'  => $request->kode_voucher,
-                'tanggal'       => $request->tanggal,
-                'jam'           => $request->jam,
-                'user_id'       => $request->user_id,
-                'jenis'         => $request->jenis,
-                'note'          => $request->note,
-                'tanggal_input' => $request->tanggal_input,
-            ]);
-            
-            return ResponseFormatter::success([
-                'jurnal_temp'=>$request->all()
-            ],__('messages.jurnal_temp_controller.berhasil_ditambah'));
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => __('messages.error_json_umum.error_catch_data'),
-                'error' => $error
-            ], __('messages.error_json_umum.error_catch_meta'),500);
-            
-        }
+        
     }
 
     public function show_by_id($id)
     {
         try {
             //code...
-            $jurnal_temp = JurnalTemp::where('id_jurnal_temp',$id)->first();
+            $jurnal_temp = JurnalTempEdit::where('id_jurnal_temp',$id)->first();
             return ResponseFormatter::success([
                 'jurnal_temp' => $jurnal_temp,
             ], __('messages.jurnal_temp_controller.berhasil_diambil'));
@@ -84,8 +54,8 @@ class JurnalTempController extends Controller
                 'tanggal_input' => 'required',
             ]);
 
-            JurnalTemp::where('id_jurnal_temp',$id)->update($request->all());
-            $a = JurnalTemp::where('id_jurnal_temp', $id)->first();
+            JurnalTempEdit::where('id_jurnal_temp',$id)->update($request->all());
+            $a = JurnalTempEdit::where('id_jurnal_temp', $id)->first();
 
             return ResponseFormatter::success([
                 'jurnal_temp'=> $a
@@ -103,7 +73,7 @@ class JurnalTempController extends Controller
     {
         try {
             //code...
-            JurnalTemp::where('id_jurnal_temp',$id)->delete();
+            JurnalTempEdit::where('id_jurnal_temp',$id)->delete();
             return ResponseFormatter::success([
                 'message' => __('messages.jurnal_temp_controller.berhasil_dihapus'),
             ], __('messages.jurnal_temp_controller.berhasil_dihapus'));

@@ -77,10 +77,9 @@ class DetailJurnalController extends Controller
             
             $detail = DetailJurnal::with('coa')->where('jurnal_id',$jurnal->id_jurnal)->where('flag_dari_atas','T')->get();
 
-$debit = $detail->sum('debit');
-        $kredit = $detail->sum('kredit');
-       
-
+            $debit = $detail->sum('debit');
+            $kredit = $detail->sum('kredit');
+                
             return ResponseFormatter::success([
                 'jurnal' => $jurnal,
                 'detail' => $detail,
