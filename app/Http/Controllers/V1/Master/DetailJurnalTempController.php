@@ -81,7 +81,7 @@ class DetailJurnalTempController extends Controller
                     $jurnal =[ 
                         'jenis'         => $request->jenis,
                         'tanggal'       => $request->tanggal,
-                        'user_id'       => $user    ,
+                        'user_id'       => $user,
                         'note'          => $request->note,
                         'coa_id'          => (int)$coa_id->coa_id,
                     ];
@@ -112,33 +112,6 @@ class DetailJurnalTempController extends Controller
             }
     }
 
-    public function show_by_id($id)
-    {
-        try {
-            //code...
-            $coba = DB::select('exec pindah_jurnal_ke_temp ?,?,?',array($id,null,null));
-                
-                    // dd($coba);
-                if ($coba) {
-                    return ResponseFormatter::success([
-                       'jurnal'=>$coba
-                    ],'Data berhasil diambil'
-                    );
-                } else {
-                    return ResponseFormatter::error(
-                        null,
-                        'Data tidak ada',
-                        404
-                    );
-                }
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => __('messages.error_json_umum.error_catch_data'),
-                'error' => $error
-            ], __('messages.error_json_umum.error_catch_meta'),500);
-        }
-    }
-
     public function show_by_jurnal($jurnal)
     {
         try {
@@ -152,43 +125,6 @@ class DetailJurnalTempController extends Controller
                 'message' => __('messages.error_json_umum.error_catch_data'),
                 'error' => $error
             ], __('messages.error_json_umum.error_catch_meta'),500);
-        }
-    }
-
-    public function update_by_jurnal($id)
-    {
-        try {
-            
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-    }
-
-    public function update_by_id(Request $request, $id)
-    {
-        try {
-            //code...
-            $request->validate([
-                'kode_voucher'=> 'required|max:20',
-                'tanggal'     => 'required|max:150',
-                'jam'         => 'required',
-                'user_id'     => 'required',
-                'jenis'       => 'required',
-                'note'        => 'required',
-            ]);
-
-            DetailJurnalTemp::where('id_detail_jurnal',$id)->update($request->all());
-            $a = DetailJurnalTemp::where('id_detail_jurnal', $id)->first();
-
-            return ResponseFormatter::success([
-                'jurnal'=> $a
-            ],__('messages.detail_jurnal_controller.berhasil_diubah'));
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => __('messages.error_json_umum.error_catch_data'),
-                'error' => $error
-            ], __('messages.error_json_umum.error_catch_meta'),500);
-            
         }
     }
 

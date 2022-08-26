@@ -7,6 +7,7 @@ use App\Http\Controllers\V1\Master\CoaBankKasController;
 use App\Http\Controllers\V1\Master\COAController;
 use App\Http\Controllers\V1\Master\DetailJurnalController;
 use App\Http\Controllers\V1\Master\DetailJurnalTempController;
+use App\Http\Controllers\V1\Master\DetailJurnalTempEditController;
 use App\Http\Controllers\V1\Master\JurnalController;
 use App\Http\Controllers\V1\Master\JurnalTempController;
 use App\Http\Controllers\V1\Master\LokasiController;
@@ -165,7 +166,16 @@ use App\Models\V1\Master\DetailJurnalTemp;
                         Route::get('/{id}', 'show_by_id');
                         Route::put('/update/{id}', 'update');
         
+                          Route::controller(DetailJurnalTempEditController::class)->group(function () {
+                            Route::prefix('detailtemp')->group(function () {
+                                            
+                                Route::post('/create', 'store');
+                                Route::delete('/delete/{id}', 'delete_by_id');
+                               
+                            });    
+                        });
                     });  
+
                  });     
     
         Route::controller(UserController::class)->group(function () {

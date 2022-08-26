@@ -80,31 +80,6 @@ class JurnalController extends Controller
         }
     }
 
-     public function do_update_by_jurnal($id)
-    {
-        try {
-            //code...
-            $jurnal = Jurnal::where('id_jurnal',$id)->first();
-            
-            $detail = DetailJurnal::with('coa')->where('jurnal_id',$jurnal->id_jurnal)->where('flag_dari_atas','T')->get();
-
-            $debit = $detail->sum('debit');
-            $kredit = $detail->sum('kredit');
-                
-            return ResponseFormatter::success([
-                'jurnal' => $jurnal,
-                'detail' => $detail,
-                'debit' => $debit,
-                'kredit' => $kredit,
-            ], __('messages.detail_jurnal_controller.berhasil_diambil'));
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => __('messages.error_json_umum.error_catch_data'),
-                'error' => $error
-            ], __('messages.error_json_umum.error_catch_meta'),500);
-        }
-    }
-
     public function delete_by_id($id)
     {
         try {
