@@ -10,6 +10,7 @@ use App\Http\Controllers\V1\Master\DetailJurnalTempController;
 use App\Http\Controllers\V1\Master\DetailJurnalTempEditController;
 use App\Http\Controllers\V1\Master\JurnalController;
 use App\Http\Controllers\V1\Master\JurnalTempController;
+use App\Http\Controllers\V1\Master\JurnalTempEditController;
 use App\Http\Controllers\V1\Master\LokasiController;
 use App\Http\Controllers\V1\Master\KategoriCOAController;
 use App\Http\Controllers\V1\Master\MenuController;
@@ -150,21 +151,16 @@ use App\Models\V1\Master\DetailJurnalTemp;
                                 Route::post('/move', 'move_data');
                                 Route::post('/create', 'store');
                                 Route::delete('/delete/{id}', 'delete_by_id');
-                                Route::get('/{id}', 'show_by_id');
-                                Route::put('/update/{id}', 'update_by_id');
                             });    
                         });
                     });    
                 });
                 
-                Route::controller(JurnalTempController::class)->group(function () {
+                Route::controller(JurnalTempEditController::class)->group(function () {
                     Route::prefix('jurnal_temp')->group(function () {
                                     
-                        Route::get('/', 'show_all');
-                        Route::post('/create', 'store');
-                        Route::delete('/delete/{id}', 'delete');
-                        Route::get('/{id}', 'show_by_id');
-                        Route::put('/update/{id}', 'update');
+                        Route::get('/getJurnal/{id}', 'getJurnal');
+                        Route::post('/update', 'do_update');
         
                           Route::controller(DetailJurnalTempEditController::class)->group(function () {
                             Route::prefix('detailtemp')->group(function () {

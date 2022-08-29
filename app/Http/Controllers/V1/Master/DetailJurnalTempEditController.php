@@ -22,6 +22,8 @@ class DetailJurnalTempEditController extends Controller
                 'jumlah'       => 'required',
             ]);
             
+            
+            // dd($request->all());
             if ($request->posisi == 'debit') {
                     $detail=  DetailJurnalTempEdit::create([
                     'jurnal_id'    => $request->jurnal_id,
@@ -38,6 +40,7 @@ class DetailJurnalTempEditController extends Controller
             } else if($request->posisi == 'kredit') {
                     $detail=  DetailJurnalTempEdit::create([
                     'jurnal_id'     => $request->jurnal_id,
+                    'coa_id'       => $request->coa_id,
                     'keterangan'    => $request->keterangan,
                     'debit'         => 0,
                     'kredit'        => $request->jumlah,
