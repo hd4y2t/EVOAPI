@@ -71,19 +71,17 @@ class DetailJurnalTempController extends Controller
 
     public function move_data(Request $request)
     {
-            try {
+            // try {
 
                 $user =auth()->user()->id;
                 $coa_id = DB::table('coa_bank_kas')
                     ->where('id_coa_bank_kas', $request->id_coa_bank_kas)->first();
-                   
-                // dd($coa_id->coa_id);
-                    $jurnal =[ 
+                $jurnal =[ 
                         'jenis'         => $request->jenis,
                         'tanggal'       => $request->tanggal,
                         'user_id'       => $user,
                         'note'          => $request->note,
-                        'coa_id'          => (int)$coa_id->coa_id,
+                        'coa_id'        => (int)$coa_id->coa_id,
                     ];
                     // dd($jurnal);
                     $coba = DB::select('exec simpan_jurnal ?,?,?,?,?,?,?',array($jurnal['jenis'],$jurnal['tanggal'] ,$jurnal['user_id'],$jurnal['note'],$jurnal['coa_id'],null,null));
@@ -92,7 +90,7 @@ class DetailJurnalTempController extends Controller
                 
                 if ($coba) {
                     return ResponseFormatter::success([
-                       'jurnal'=>$coba
+                      'jurnal'=>$coba,
                     ],'Data berhasil diambil'
                     );
                 } else {
@@ -102,14 +100,14 @@ class DetailJurnalTempController extends Controller
                         404
                     );
                 }
-            } catch (Exception $error) {
-                //throw $th;
+            // } catch (Exception $error) {
+            //     //throw $th;
 
-                return ResponseFormatter::error([
-                    'error'=> $error
-                ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
+            //     return ResponseFormatter::error([
+            //         'error'=> $error
+            //     ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
                 
-            }
+            // }
     }
 
     public function show_by_jurnal($jurnal)

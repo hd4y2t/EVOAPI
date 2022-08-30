@@ -3,24 +3,16 @@
 namespace App\Http\Controllers\V1\Master;
 
 use Exception;
-use Illuminate\Http\Request;
 use App\Models\V1\Master\Jurnal;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\V1\Master\JurnalTemp;
 use App\Models\V1\Master\DetailJurnal;
-use Illuminate\Database\Query\Expression;
-use App\Http\Controllers\V1\Master\JurnalTempEditController;
-use App\Models\V1\Master\CoaBankKas;
-use App\Models\V1\Master\DetailJurnalTempEdit;
-use App\Models\V1\Master\JurnalTempEdit;
-
 class JurnalController extends Controller
 {
     public function show_all()
     {
-        $jurnal = Jurnal::all();
+        $jurnal = Jurnal::orderBy('tanggal','DESC')->get();
         return ResponseFormatter::success([
             'jurnal' => $jurnal,
          ], __('messages.jurnal_controller.berhasil_diambil'));

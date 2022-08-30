@@ -36,6 +36,9 @@ class CoaBankKasController extends Controller
                 'inisial' => 'required',
             ]);
 
+            if(CoaBankKas::where('coa_id', $request->coa_id)){
+                return ResponseFormatter::error(400, __('messages.coa_bank_kas_controller.coa_sudah_ada'));
+            }else{
             CoaBankKas::create([
                 'coa_id' => $request->coa_id,
                 'inisial' => $request->inisial,
@@ -44,6 +47,8 @@ class CoaBankKasController extends Controller
             return ResponseFormatter::success([
                 'coa_bank'=>$request->all()
             ],__('messages.coa_bank_kas_controller.berhasil_ditambah'));
+            }
+           
         } catch (Exception $error) {
             //throw $th;
             return ResponseFormatter::error([
