@@ -40,12 +40,7 @@ class JurnalController extends Controller
        try {
                   
             $coba = DB::select('exec pindah_jurnal_ke_temp ?,?,?',array($id,null,null));
-            // dd($coba);
-            // $jurnal = JurnalTempEdit::where('id_jurnal',$id)->first();
-            // $bank_kas = CoaBankKas::with('coa')->where('coa_id',$jurnal['id_coa_atas'])->first();
-            // $detail = DetailJurnalTempEdit::with('coa')->where('jurnal_id',$id)->get();
-            // $debit = $detail->sum('debit');
-            // $kredit = $detail->sum('kredit');
+    
             if ($coba) {
                 return ResponseFormatter::success([
                     'status'=>$coba,

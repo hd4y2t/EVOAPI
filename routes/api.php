@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\Master\COAController;
 use App\Http\Controllers\V1\Master\DetailJurnalController;
 use App\Http\Controllers\V1\Master\DetailJurnalTempController;
 use App\Http\Controllers\V1\Master\DetailJurnalTempEditController;
+use App\Http\Controllers\V1\Master\JPController;
 use App\Http\Controllers\V1\Master\JurnalController;
 use App\Http\Controllers\V1\Master\JurnalTempController;
 use App\Http\Controllers\V1\Master\JurnalTempEditController;
@@ -129,10 +130,9 @@ use App\Models\V1\Master\DetailJurnalTemp;
 
                 Route::controller(JurnalController::class)->group(function () {
                     Route::prefix('jurnal')->group(function () {
-                                    
+                        
                         Route::get('/get_last_id', 'get_last_id');
                         Route::get('/', 'show_all');
-                        Route::post('/create', 'store');
                         Route::delete('/delete/{id}', 'delete_by_id');
                         Route::get('/update/{id}', 'update_by_jurnal');
 
@@ -171,8 +171,37 @@ use App\Models\V1\Master\DetailJurnalTemp;
                             });    
                         });
                     });  
-
                  });     
+
+                    Route::controller(JPController::class)->group(function () {
+                    Route::prefix('jp')->group(function () {
+                        
+                        Route::get('/', 'show_all');
+                        Route::get('/get_last_id', 'get_last_id');
+                        Route::delete('/delete/{id}', 'delete_by_id');
+                        Route::get('/update/{id}', 'update_by_jurnal');
+
+                        
+                        Route::post('/move', 'move_data');
+
+                        Route::controller(DetailJurnalController::class)->group(function () {
+                            Route::prefix('detail')->group(function () {
+
+                                Route::get('/show', 'show_all');
+                                Route::get('/{jurnal}', 'show_by_jurnal');
+                            
+                            });    
+                        });
+                        Route::controller(DetailJurnalTempController::class)->group(function () {
+                            Route::prefix('detailtemp')->group(function () {
+                                            
+                                Route::get('/show', 'show_all');
+                                Route::post('/create', 'store');
+                                Route::delete('/delete/{id}', 'delete_by_id');
+                            });    
+                        });
+                    });    
+                });
     
         Route::controller(UserController::class)->group(function () {
         

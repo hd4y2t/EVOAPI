@@ -13,9 +13,11 @@ use App\Http\Controllers\Controller;
 class RoleMenuController extends Controller
 {
     public function getMenu($id){
-        $menu = DB::select('select * from role_submenu 
-        join submenu on submenu.id_submenu = role_submenu.id_submenu join menu on menu.id_menu = submenu.menu_id where user_id = '.$id.'
-        order by menu.nomor_urut asc, submenu.nomor_urut_submenu asc');
+        $menu = DB::select('
+select DISTINCT menu.id_menu as nama_menu,* from role_menu
+	join menu on menu.id_menu = role_menu.menu_id
+	where role_menu.user_id = ' . $id . '
+	order by menu.nomor_urut asc ');
         return ResponseFormatter::success(['menu'=>$menu], __('messages.role_menu_controller.berhasil_diambil'));
         
     }

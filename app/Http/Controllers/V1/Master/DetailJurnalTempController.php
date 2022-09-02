@@ -71,8 +71,7 @@ class DetailJurnalTempController extends Controller
 
     public function move_data(Request $request)
     {
-            // try {
-
+        try{
                 $user =auth()->user()->id;
                 $coa_id = DB::table('coa_bank_kas')
                     ->where('id_coa_bank_kas', $request->id_coa_bank_kas)->first();
@@ -100,14 +99,14 @@ class DetailJurnalTempController extends Controller
                         404
                     );
                 }
-            // } catch (Exception $error) {
-            //     //throw $th;
+            } catch (Exception $error) {
+                //throw $th;
 
-            //     return ResponseFormatter::error([
-            //         'error'=> $error
-            //     ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
+                return ResponseFormatter::error([
+                    'error'=> $error
+                ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
                 
-            // }
+            }
     }
 
     public function show_by_jurnal($jurnal)
