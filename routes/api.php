@@ -9,6 +9,7 @@ use App\Http\Controllers\V1\Master\DetailJurnalController;
 use App\Http\Controllers\V1\Master\DetailJurnalTempController;
 use App\Http\Controllers\V1\Master\DetailJurnalTempEditController;
 use App\Http\Controllers\V1\Master\JPController;
+use App\Http\Controllers\V1\Master\JPEditController;
 use App\Http\Controllers\V1\Master\JurnalController;
 use App\Http\Controllers\V1\Master\JurnalTempController;
 use App\Http\Controllers\V1\Master\JurnalTempEditController;
@@ -112,6 +113,8 @@ use App\Models\V1\Master\DetailJurnalTemp;
                       Route::put('/update/{id}', 'update_by_id');
                       Route::get('/menu/{id_user}', 'getMenu');
                       Route::get('/submenu/{id_menu}', 'getSubmenu');
+
+                      Route::get('/akses', 'getAkses');
       
                   });
                });     
@@ -171,9 +174,9 @@ use App\Models\V1\Master\DetailJurnalTemp;
                             });    
                         });
                     });  
-                 });     
+                });     
 
-                    Route::controller(JPController::class)->group(function () {
+                Route::controller(JPController::class)->group(function () {
                     Route::prefix('jp')->group(function () {
                         
                         Route::get('/', 'show_all');
@@ -202,6 +205,22 @@ use App\Models\V1\Master\DetailJurnalTemp;
                         });
                     });    
                 });
+                     Route::controller(JPEditController::class)->group(function () {
+                    Route::prefix('jp_edit')->group(function () {
+                                    
+                        Route::get('/getJurnal/{id}', 'getJurnal');
+                        Route::post('/update', 'do_update');
+        
+                          Route::controller(DetailJurnalTempEditController::class)->group(function () {
+                            Route::prefix('detailtemp')->group(function () {
+                                
+                                Route::post('/create', 'store');
+                                Route::delete('/delete/{id}', 'delete_by_id');
+                               
+                            });    
+                        });
+                    });  
+                });   
     
         Route::controller(UserController::class)->group(function () {
         

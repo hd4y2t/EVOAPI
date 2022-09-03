@@ -12,13 +12,19 @@ use App\Http\Controllers\Controller;
 
 class RoleMenuController extends Controller
 {
+     public function getAkses()
+    {   $user = auth()->user()->id;
+        $akses = DB::select('select submenu.nama as nama_sub,* from role_submenu role_submenu join submenu on submenu.id_submenu = role_submenu.id_submenu where user_id = '.$user.'');
+        return ResponseFormatter::success(['akses'=>$akses], __('messages.role_menu_controller.berhasil_diambil'));
+    }
+
     public function getMenu($id){
         $menu = DB::select('
-select DISTINCT menu.id_menu as nama_menu,* from role_menu
-	join menu on menu.id_menu = role_menu.menu_id
-	where role_menu.user_id = ' . $id . '
-	order by menu.nomor_urut asc ');
-        return ResponseFormatter::success(['menu'=>$menu], __('messages.role_menu_controller.berhasil_diambil'));
+                select DISTINCT menu.id_menu as nama_menu,* from role_menu
+                join menu on menu.id_menu = role_menu.menu_id
+                where role_menu.user_id = ' . $id . '
+                order by menu.nomor_urut asc ');
+            return ResponseFormatter::success(['menu'=>$menu], __('messages.role_menu_controller.berhasil_diambil'));
         
     }
     public function getSubMenu($id)

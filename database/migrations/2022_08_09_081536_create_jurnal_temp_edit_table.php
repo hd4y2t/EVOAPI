@@ -19,7 +19,7 @@ return new class extends Migration
                 $table->date('tanggal');
                 $table->string('jenis')->length(2);
                 $table->string('note')->length(80);
-                $table->foreignId('id_coa_atas');
+                $table->foreignId('id_coa_atas')->nullable();
                 $table->timestamps();
         });
     }

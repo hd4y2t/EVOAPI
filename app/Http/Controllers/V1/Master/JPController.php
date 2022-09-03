@@ -12,22 +12,6 @@ use App\Models\V1\Master\DetailJurnal;
 
 class JPController extends Controller
 {
-    //
-     public function show_all()
-    {
-        try {
-            
-        $jurnal = Jurnal::where('jenis','JP')->orderBy('tanggal','DESC')->get();
-        return ResponseFormatter::success([
-            'jurnal' => $jurnal,
-         ], __('messages.jurnal_controller.berhasil_diambil'));
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => __('messages.error_json_umum.error_catch_data'),
-                'error' => $error
-            ], __('messages.error_json_umum.error_catch_meta'),500);
-        }
-    }
 
     public function show_by_id($id)
     {
@@ -79,6 +63,33 @@ class JPController extends Controller
                 ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
                 
             }
+    }
+
+    public function update_by_jurnal($id)
+    {
+       try {
+                  
+            $coba = DB::select('exec pindah_jurnal_ke_temp ?,?,?',array($id,null,null));
+    // dd($coba);
+            if ($coba) {
+                return ResponseFormatter::success([
+                    'status'=>$coba,
+                ],'Data berhasil diambil'
+                );
+            } else {
+                return ResponseFormatter::error(
+                    null,
+                    'Data tidak ada',
+                    404
+                );
+            }
+        } catch (Exception $error) {
+
+            return ResponseFormatter::error([
+                'error'=> $error
+            ],__('messages.detail_jurnal_controller.gagal_ditambah'),500);
+            
+        }
     }
 
      public function delete_by_id($id)
