@@ -79,4 +79,19 @@ class JurnalController extends Controller
             
         }
     }
+
+    public function lastJurnal(){
+        try {
+            $jurnal = Jurnal::where('jenis','!=','JP')->orderBy('id_jurnal','DESC')->first();
+            return ResponseFormatter::success([
+                'jurnal' => $jurnal,
+            ], __('messages.jurnal_controller.berhasil_diambil'));
+        } catch (Exception $error) {
+            return ResponseFormatter::error([
+                'message' => __('messages.error_json_umum.error_catch_data'),
+                'error' => $error
+            ], __('messages.error_json_umum.error_catch_meta'),500);
+            
+        }
+    }
 }
